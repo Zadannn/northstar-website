@@ -1,0 +1,83 @@
+---
+import Wordmark from "./Wordmark.astro";
+import { siteNav, type SampleSite } from "../config/sites";
+
+interface Props {
+  site: SampleSite;
+}
+
+const { site } = Astro.props;
+const nav = siteNav(site);
+
+function normalize(pathname: string): string {
+  const path = pathname.split("#")[0].split("?")[0];
+  if (path === "/") return "/";
+  return path.endsWith("/") ? path : `${path}/`;
+}
+
+const path = normalize(Astro.url.pathname);
+
+function isCurrent(href: string): boolean {
+  if (href.includes("#")) return false;
+  return normalize(href) === path;
+}
+---
+
+<header class="site-header">
+  <div class="wrap header-shell">
+    <a class="logo" href={site.base} aria-label={`${site.name}, home`}>
+      <Wordmark name={site.name} />
+    </a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <ul class="nav-list">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <a class="button header-cta" href={`${site.base}quote/`}>Request a free quote</a>
+    <details class="menu">
+      <summary class="nav-toggle">
+        <span class="nav-toggle-open">Menu</span>
+        <span class="nav-toggle-close">Close</span>
+      </summary>
+      <div class="menu-panel">
+        <nav class="site-nav" aria-label="Primary">
+          <ul class="nav-list">
+            {
+              nav.map((item) => (
+                <li>
+                  <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <div class="nav-cta">
+          <a class="button" href={`${site.base}quote/`}>Request a free quote</a>
+        </div>
+      </div>
+    </details>
+  </div>
+</header>
+
+<script>
+  const menu = document.querySelector(".site-header .menu");
+  if (menu instanceof HTMLDetailsElement) {
+    const summary = menu.querySelector("summary");
+    menu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.open) {
+        menu.open = false;
+        if (summary instanceof HTMLElement) summary.focus();
+      }
+    });
+  }
+</script>

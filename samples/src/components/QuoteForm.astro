@@ -1,0 +1,50 @@
+---
+import type { SampleSite } from "../config/sites";
+
+interface Props {
+  site: SampleSite;
+}
+
+const { site } = Astro.props;
+---
+
+<form class="contact-form" id="quote-form" onsubmit="return false">
+  <p class="notice" role="note">Demo form, not active</p>
+  <fieldset>
+    <legend>Request a free quote</legend>
+    <div class="fields">
+      <div class="fields-split">
+        <div>
+          <label for="name">Your name <span class="req">(required)</span></label>
+          <input id="name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div>
+          <label for="phone">Phone <span class="req">(required)</span></label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+        </div>
+      </div>
+      <div class="fields-split">
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" />
+        </div>
+        <div>
+          <label for="town">Town <span class="req">(required)</span></label>
+          <input id="town" name="town" type="text" autocomplete="address-level2" required />
+        </div>
+      </div>
+      <div>
+        <label for="service">Service</label>
+        <select id="service" name="service">
+          <option value="">Select a service</option>
+          {site.services.map((service) => <option>{service.title}</option>)}
+        </select>
+      </div>
+      <div>
+        <label for="message">Message <span class="req">(required)</span></label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+      <button class="button" type="submit">Request a free quote</button>
+    </div>
+  </fieldset>
+</form>
