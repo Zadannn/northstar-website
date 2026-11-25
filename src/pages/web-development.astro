@@ -1,0 +1,76 @@
+---
+import Cta from "../components/Cta.astro";
+import PageHero from "../components/PageHero.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const included = [
+  "Business and company websites that explain the offer and the next step",
+  "Landing pages for a single service, campaign, or offer",
+  "Redesigns of an existing site that is hard to use or hard to update",
+  "Responsive layouts that stay readable on a phone and on a wide screen",
+  "Contact forms that send an enquiry somewhere you can act on it",
+  "Maintenance and updates inside a written scope",
+  "Basic technical SEO and performance: page titles, descriptions, a sitemap, and a layout that loads without unnecessary weight",
+];
+
+const notIncluded = [
+  "A custom web application or customer portal",
+  "A full online store with complex checkout, unless that is scoped as its own project",
+  "Guaranteed search rankings, traffic, or leads",
+  "Unlimited edits or an open-ended content service",
+];
+---
+
+<BaseLayout
+  title="Website Development"
+  description="Business websites, landing pages, redesigns, responsive development, contact forms, maintenance, and basic technical SEO."
+>
+  <PageHero
+    eyebrow="Website Development"
+    title="Websites that explain the work and invite the next step."
+    lede="We design and build professional sites for businesses and companies: the pages, the contact path, and the basics that help the site be found and stay usable. The scope is agreed before we build."
+  />
+
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <h2>What a website engagement includes</h2>
+        <ul class="plain-list">
+          {included.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <div class="panel">
+        <h2>Not a standard package</h2>
+        <ul class="plain-list">
+          {notIncluded.map((item) => <li>{item}</li>)}
+        </ul>
+        <p>If you need one of those, we will say so and treat it as separate work.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>Maintenance and updates</h2>
+      <p>
+        After launch, maintenance can cover agreed text changes, checks that forms still send, and routine updates.
+        The amount of change and the response time are written down. It is not an unlimited plan.
+      </p>
+      <h2>Basic technical SEO and performance</h2>
+      <p>
+        We set page titles and descriptions, add a sitemap, and build pages that work on a phone without heavy extras.
+        That helps search engines read the site. It is not a promise of a ranking or a number of visitors.
+      </p>
+      <p>
+        A website often needs a place for the enquiry to go next. That is the CRM and automation work, described on
+        its own page.
+      </p>
+      <p><a href="/crm-automation">See CRM solutions and automation</a></p>
+    </div>
+  </section>
+
+  <Cta
+    heading="Planning a site, or replacing one?"
+    text="Tell us what the site needs to do. We will reply with questions, then a scope if the work is a fit."
+  />
+</BaseLayout>

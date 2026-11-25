@@ -1,238 +1,327 @@
 /**
- * Business facts for the Northstar site.
+ * Single source of truth for the site.
  *
- * Edit the placeholders in `site` before launch: business name, phone, email,
- * photos, prices, and the contact form address. `siteUrl` is the public
- * address (https://example.com until a real domain is ready).
+ * The business name is a placeholder. Change `name` here and every public
+ * page follows. Leave `draft` true until launch. Leave `showPricing` false:
+ * the figures in `internalDraftPrices` are not approved and must not be shown.
  *
- * Leave `draft` set to true until launch. That shows the Draft banner, adds
- * the noindex tag, and tells robots to stay away.
+ * `formEndpoint` stays empty until a form service address exists. While it is
+ * empty the contact form stays disabled.
  */
 
 export const site = {
-  /** Placeholder business name. */
+  /** Placeholder business name. Do not hardcode this in pages. */
   name: "Northstar",
-  /** Placeholder public address. Do not use a real domain until launch. */
+  /** Placeholder public address. */
   siteUrl: "https://example.com",
-  /** Short line used in the home page description. */
   description:
-    "Northstar is a small US–India team that builds clear, mobile-friendly websites and simple lead follow-up for New Jersey home-service businesses.",
-  /** Placeholder phone, shown across the site. */
+    "Professional websites, practical CRM setup, and business automation for companies that want clearer customer experiences and simpler day-to-day work.",
+  /** Placeholder phone. */
   phoneDisplay: "(000) 000-0000",
-  /** Placeholder telephone link. Use the real number, with country code, when you have it. */
+  /** Placeholder telephone link. */
   phoneHref: "tel:+10000000000",
-  /** Placeholder email address. */
+  /** Placeholder email. */
   email: "hello@example.com",
-  /** The area you serve (not where every team member is based). */
-  location: "New Jersey",
-  /** Keep true until the site is ready to be found in search. */
+  /** Keep true until the site should be indexed. */
   draft: true,
   /**
-   * Which kinds of content are still stand-ins. Set each one to false once the
-   * real phone and email, real prices, or real photos are in place. The
-   * "Placeholder" tags on the pages follow these switches.
+   * Public prices are off. The figures below are kept for internal reference
+   * only and are not approved for the website.
    */
-  placeholders: {
-    contact: true,
-    prices: true,
-    photos: true,
-  },
-  /**
-   * Address of a form service (for example a Formspree form URL). While this is
-   * empty the contact form stays switched off and people are asked to call or
-   * email. Paste the address here to turn the form on.
-   */
-  formEndpoint: "",
-  /** Starting prices. Final prices need both founders' agreement. */
-  prices: {
+  showPricing: false,
+  internalDraftPrices: {
+    note: "Not approved. Do not display while showPricing is false.",
     webDevelopment: "From $999 (most projects $999–$1,499)",
     websiteCare: "$79–$129 per month",
     leadFollowUp: "Setup from $700. Optional monthly management from $149",
   },
   /**
-   * Placeholder photos. The files in public/images are stand-ins.
-   * Point `src` at a new file when a real photo is ready.
+   * Optional logo file. Leave `src` empty to use the text wordmark, which
+   * always reads `name`. Drop in a file later without editing the pages.
    */
-  photos: {
-    hero: {
-      src: "/images/hero-placeholder.svg",
-      alt: "Photo placeholder for a New Jersey storefront or job site",
-      caption: "Replace with a photo of a real job or storefront.",
-    },
-    about: {
-      src: "/images/about-placeholder.svg",
-      alt: "Photo placeholder for the people behind Northstar",
-      caption: "Replace with a photo of the people behind the business.",
-    },
-    work: {
-      src: "/images/work-placeholder.svg",
-      alt: "Photo placeholder for a finished client project",
-      caption: "Replace with a photo of finished work.",
-    },
+  logo: {
+    src: "",
+    alt: "",
+    width: 160,
+    height: 32,
+  },
+  placeholders: {
+    contact: true,
+  },
+  /** Paste a form service URL here to turn the enquiry form on. */
+  formEndpoint: "",
+  cta: {
+    label: "Let's Talk About Your Project",
+    href: "/contact",
   },
 } as const;
 
 export const nav = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/how-it-works", label: "How it works" },
+  { href: "/how-it-works", label: "How It Works" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
-/** The trades we start with. Keep this list short until the process is proven. */
-export const trades = [
-  "Cleaning companies",
-  "Landscapers",
-  "Plumbers",
-  "HVAC contractors",
+export const services = [
+  {
+    id: "web-development",
+    href: "/web-development",
+    title: "Website Development",
+    summary:
+      "Professional websites designed to communicate your value, build trust and help customers take the next step.",
+    points: [
+      "Business websites",
+      "Landing pages",
+      "Website redesigns",
+      "Responsive development",
+      "Maintenance and updates",
+    ],
+    cta: "Explore Website Development",
+  },
+  {
+    id: "crm",
+    href: "/crm-automation#crm",
+    title: "CRM Solutions",
+    summary:
+      "Practical customer-management solutions that help you organise enquiries, manage leads and keep important information in one place.",
+    points: [
+      "CRM setup",
+      "Lead management",
+      "Customer databases",
+      "Sales pipeline organisation",
+      "Business integrations",
+    ],
+    cta: "Explore CRM Solutions",
+  },
+  {
+    id: "automation",
+    href: "/crm-automation#automation",
+    title: "Business Automation",
+    summary:
+      "Connected workflows that reduce repetitive tasks, improve follow-ups and help your business operate more efficiently.",
+    points: [
+      "Lead capture",
+      "Automated notifications",
+      "Follow-up workflows",
+      "Integrations",
+      "Process automation",
+    ],
+    cta: "Explore Business Automation",
+  },
 ] as const;
 
+export const problems = [
+  {
+    title: "Hard to find or understand online",
+    text: "People cannot tell what you do, who you help, or what to do next.",
+  },
+  {
+    title: "Enquiries are hard to track",
+    text: "Messages sit across inboxes and notes, and some never get a reply.",
+  },
+  {
+    title: "Repetitive admin consumes time",
+    text: "The same details are copied from a form into a list, then into an email.",
+  },
+  {
+    title: "Tools and processes do not work together",
+    text: "The website, the customer list, and the follow-up each live somewhere else.",
+  },
+] as const;
+
+export const flow = [
+  {
+    title: "Website Enquiry",
+    text: "Someone sends a message from your site.",
+  },
+  {
+    title: "Lead Capture",
+    text: "The enquiry is saved instead of staying in an inbox.",
+  },
+  {
+    title: "CRM Organisation",
+    text: "It is filed with the other open leads.",
+  },
+  {
+    title: "Automated Notification",
+    text: "The right person is told.",
+  },
+  {
+    title: "Follow-up",
+    text: "A reply or reminder goes out so it does not go quiet.",
+  },
+] as const;
+
+export const audiences = [
+  {
+    title: "Professional services",
+    text: "A clear site and a record of who has been in touch.",
+  },
+  {
+    title: "Home and local services",
+    text: "Enquiries that are written down, not left to memory.",
+  },
+  {
+    title: "Retail and e-commerce",
+    text: "A trustworthy site and a cleaner way to handle questions.",
+  },
+  {
+    title: "Consulting businesses",
+    text: "Conversations that turn into a tracked next step.",
+  },
+  {
+    title: "Independent professionals",
+    text: "A straightforward presence and a simple way to enquire.",
+  },
+  {
+    title: "Growing teams",
+    text: "A shared view of leads once a single inbox is no longer enough.",
+  },
+] as const;
+
+/** Short process used on the home page. */
 export const steps = [
   {
-    title: "Conversation",
-    summary: "We learn how customers find you and where enquiries get lost.",
-    detail:
-      "We ask about your services, the towns you cover, who answers the phone, and how quotes go out. We also ask what you want the website to do for you.",
+    number: "01",
+    title: "Discover",
+    text: "We understand your business, goals, challenges and requirements.",
   },
   {
+    number: "02",
     title: "Plan",
-    summary: "You get a written scope, price, and timeline before we build.",
-    detail:
-      "The plan says what we will build, what is not included, how many rounds of changes you get, and what it costs. Work starts once you have agreed it in writing and paid the deposit. Prices shown on this draft site are not final yet.",
+    text: "We define the right solution, scope, deliverables and project direction.",
   },
   {
+    number: "03",
     title: "Build",
-    summary: "We build a preview you can review before anything goes live.",
-    detail:
-      "You see a working preview while it is still easy to change. Send one combined list of changes per round. Two rounds are included. New features are quoted separately.",
+    text: "We design, develop and configure the agreed solution.",
   },
   {
-    title: "Launch and handover",
-    summary: "We test it, launch it, and hand over what you need.",
-    detail:
-      "Before launch we check the site on phones, test the forms and call links, and agree the final balance. You own your domain and accounts. You get the access details and a short guide, and any care plan has its limits written down.",
+    number: "04",
+    title: "Launch & Support",
+    text: "We test the work, prepare the handover and provide support according to the agreed scope.",
   },
 ] as const;
 
-/** Straight answers to the questions owners ask most. */
+/** Fuller process used on How it works. */
+export const detailedSteps = [
+  {
+    number: "01",
+    title: "Discovery",
+    text: "We learn how the business runs today, what should change, and which tools you already use. We ask who handles enquiries and where work gets repeated.",
+  },
+  {
+    number: "02",
+    title: "Planning",
+    text: "We write the scope: what will be designed, configured, or connected, what is not included, and how you will review it. Work starts from that written plan.",
+  },
+  {
+    number: "03",
+    title: "Development",
+    text: "We design and build the website, set up the CRM, or configure the workflows we agreed. You see the work while it can still be adjusted.",
+  },
+  {
+    number: "04",
+    title: "Testing",
+    text: "We check the pages on small and large screens, send test enquiries, and confirm notifications and records land where the plan says they should.",
+  },
+  {
+    number: "05",
+    title: "Launch",
+    text: "We put the agreed work live, hand over access that belongs to you, and note how ordinary updates are made.",
+  },
+  {
+    number: "06",
+    title: "Support",
+    text: "Support follows the scope. That can include a handover, a short settling-in period, or website maintenance with the limits written down. It is not an open-ended retainer unless that is what was agreed.",
+  },
+] as const;
+
+export const principles = [
+  {
+    title: "Practical thinking",
+    text: "We choose the smallest setup that does the job, using tools your team can run.",
+  },
+  {
+    title: "Solutions built around your needs",
+    text: "The website, the records, and the workflows follow how your business already works.",
+  },
+  {
+    title: "Clear communication",
+    text: "You see the scope, the deliverables, and what is not included before we build.",
+  },
+  {
+    title: "Reliable execution",
+    text: "We test the agreed work, hand it over, and support it within that scope.",
+  },
+] as const;
+
 export const faqs = [
   {
-    question: "Can you guarantee more leads or a Google ranking?",
+    question: "What types of businesses do you work with?",
     answer:
-      "No. No honest provider can. We make the site clear, quick on a phone, and easy to contact, and we can set up basic tracking so you can see what happens. Results depend on demand, competition, and your reputation.",
+      "Small businesses, growing companies, independent professionals, and teams in professional services, local services, retail, consulting, and similar fields. The examples on the home page are examples, not a limit, and the work is not tied to one place. If a request sits outside what we deliver as a standard package, we say so.",
   },
   {
-    question: "Who owns my domain and accounts?",
+    question: "Do you only build websites?",
     answer:
-      "You do. We set things up in your name wherever possible and hand over the access details at launch. Hosting, domain, and similar fees are listed separately.",
+      "No. Website development, CRM solutions, and business automation are three equal parts of the work. A project might need one of them, or all three so the site, the customer record, and the follow-up fit together.",
   },
   {
-    question: "How many changes are included?",
+    question: "Can you help us organise customer enquiries?",
     answer:
-      "Two rounds of changes before launch. Please send one combined list per round. Anything new, such as extra pages or features, is quoted separately.",
+      "Yes. That usually means configuring a CRM, naming the stages an enquiry moves through, and sending new website messages into that system. We set up and organise a practical CRM. A custom-built CRM platform is not a standard package.",
   },
   {
-    question: "How does payment work?",
+    question: "Can you automate repetitive business tasks?",
     answer:
-      "You get a written scope and price first. A deposit starts the work and the balance is due before launch. Prices on this draft site are placeholders until they are final.",
+      "Yes, when the task is specific and the tools can support it. Typical work is saving a form enquiry, sending an email notification, and starting a follow-up. We automate the workflow we agree. AI products, and complex integrations across many systems, are not part of a standard package.",
   },
   {
-    question: "Do you build online stores or booking systems?",
+    question: "Do you provide website maintenance?",
     answer:
-      "Not at the start. We keep to simple business websites and lead follow-up so we can do them well. If you need something more complex, we will tell you honestly.",
+      "Yes. Maintenance and updates can be part of a website engagement: agreed content changes, checks after launch, and routine updates inside a written scope. It is not an unlimited change plan.",
   },
   {
-    question: "Where is your team based?",
+    question: "How does your project process work?",
     answer:
-      "We are a small US–India team. Your main contact is on the US side and handles your questions, content, and feedback. The website build is done remotely by our technical lead in India.",
+      "We discover what you need, plan the scope and deliverables, build or configure the agreed solution, test it, launch it, and support it within that scope. The How it works page describes each step.",
+  },
+  {
+    question: "How much do your services cost?",
+    answer:
+      "We talk through the requirements before we prepare a proposal. This site does not publish prices. We do not offer discounts, guarantees, or unlimited work as a package. Nothing starts until the scope is agreed.",
+  },
+  {
+    question: "How do we get started?",
+    answer:
+      "Use the contact page. Call or email, or use the form when it is switched on. Tell us what you want to improve. We will reply with questions, and with a proposed scope if the work is a fit.",
   },
 ] as const;
 
-const serviceList = [
-  {
-    slug: "web-development",
-    title: "Website launch",
-    priceKey: "webDevelopment",
-    summary:
-      "A clean, mobile-friendly site of up to five pages that says what you do, where you work, and how to call or ask for a quote.",
-    lede: "Most local-service sites fail in a simple way: a person on a phone cannot tell what you do or how to call. We build a clear site around the jobs you already sell.",
-    included: [
-      "Up to five pages, for example Home, Services, About, Projects, and Contact",
-      "A mobile-friendly layout with a tap-to-call button and a quote or contact form",
-      "Your services and the towns you cover, written clearly",
-      "Page titles, descriptions, and a sitemap so search engines can read the site",
-      "Basic analytics and Search Console setup, where you give us access",
-      "Two rounds of changes, then launch and a written handover",
-    ],
-    notIncluded: [
-      "Online stores, customer logins, booking systems, or custom dashboards",
-      "Logo design, professional photography, or paid stock images",
-      "Hosting, domain, and premium plugin fees (listed separately, billed at cost)",
-      "Guaranteed search rankings, leads, or traffic",
-      "Unlimited edits",
-    ],
-  },
-  {
-    slug: "website-care",
-    title: "Website care",
-    priceKey: "websiteCare",
-    summary:
-      "Monthly upkeep so your site keeps working after launch, with the limits written down.",
-    lede: "A website is not finished at launch. Forms break, software ages, and phone numbers change. A care plan puts the routine upkeep in writing so you know who handles it. Plans start with sites we build; we look at other sites case by case.",
-    included: [
-      "Backups and update checks",
-      "Uptime and basic security checks",
-      "A set amount of small text and photo changes each month",
-      "A named contact and a response time written into your plan",
-    ],
-    notIncluded: [
-      "New pages, redesigns, or major content writing (quoted separately)",
-      "Emergency work outside the agreed hours",
-      "Unlimited edits",
-    ],
-  },
-  {
-    slug: "lead-follow-up",
-    title: "Lead follow-up setup",
-    priceKey: "leadFollowUp",
-    summary:
-      "Stop enquiries going cold: missed-call texts, one simple lead list, quote reminders, and review requests.",
-    lede: "Many small shops lose jobs not because the work is poor, but because a missed call or a quote request sits for days. We set up a few simple, tested automations on a low-cost tool you own, rather than building a custom system that depends on us to keep it running.",
-    included: [
-      "An instant text reply when a call is missed, once your business number is registered for texting",
-      "Website and form enquiries sent into one simple lead list, with a phone or email alert for you",
-      "A reminder when a quote has gone quiet for a few days",
-      "A review request after a job is finished",
-      "Opt-out handling, and a written test checklist so each automation is checked before it goes live",
-    ],
-    notIncluded: [
-      "A custom-coded CRM or dashboard",
-      "AI chatbots or AI phone agents that talk to your customers on their own",
-      "Links to accounting, payment, or dispatch software (quoted separately)",
-      "Platform and text-message fees (billed at cost, in accounts you own)",
-      "Promises about how many leads or reviews you will get",
-    ],
-  },
-] as const satisfies readonly {
-  slug: string;
-  title: string;
-  priceKey: keyof typeof site.prices;
-  summary: string;
-  lede: string;
-  included: readonly string[];
-  notIncluded: readonly string[];
-}[];
+export const projectTypes = [
+  "Website development",
+  "CRM solutions",
+  "Business automation",
+  "Not sure yet",
+] as const;
 
-export const services = serviceList;
+export const legalPaths = [
+  { href: "/privacy", label: "Privacy Policy" },
+  { href: "/terms", label: "Terms and Conditions" },
+] as const;
 
-export type Service = (typeof services)[number];
-export type ServiceSlug = Service["slug"];
-
-export function getService(slug: ServiceSlug): Service {
-  const match = services.find((service) => service.slug === slug);
-  if (!match) {
-    throw new Error(`Unknown service: ${slug}`);
-  }
-  return match;
-}
+/** Paths that belong in the sitemap once the site is no longer a draft. */
+export const publicPaths = [
+  "/",
+  "/services",
+  "/web-development",
+  "/crm-automation",
+  "/how-it-works",
+  "/about",
+  "/contact",
+  "/privacy",
+  "/terms",
+] as const;
