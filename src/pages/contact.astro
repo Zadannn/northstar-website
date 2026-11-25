@@ -1,0 +1,79 @@
+---
+import PageHero from "../components/PageHero.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../config/site";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Call or email Northstar. The contact form is visible but turned off until a form backend exists."
+>
+  <PageHero
+    kicker="Contact"
+    title="Tell us what you want to fix."
+    lede="The form on this page is switched off. It does not send anything, and there is no inbox behind it. Call or email, and include what you do, the town you serve, and whether you want a website, a CRM, automation, or help choosing."
+  />
+
+  <section class="section">
+    <div class="wrap contact-grid">
+      <div>
+        <h2>Phone and email</h2>
+        <p class="contact-line">
+          <span class="placeholder-tag">Placeholder</span>
+          <a class="contact-value" href={site.phoneHref}>{site.phoneDisplay}</a>
+        </p>
+        <p class="contact-line">
+          <span class="placeholder-tag">Placeholder</span>
+          <a class="contact-value" href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+        <p>We work with local-service businesses in {site.location}.</p>
+      </div>
+
+      <form class="contact-form" aria-describedby="form-status">
+        <p id="form-status" class="form-status">
+          This form is turned off. It does not send messages. Use the phone number or email instead.
+        </p>
+        <fieldset disabled>
+          <legend>Send a message</legend>
+          <div class="fields">
+            <div class="fields-split">
+              <div>
+                <label for="name">Your name</label>
+                <input id="name" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" required />
+              </div>
+            </div>
+            <div class="fields-split">
+              <div>
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
+              </div>
+              <div>
+                <label for="business">Business name</label>
+                <input id="business" name="business" type="text" autocomplete="organization" />
+              </div>
+            </div>
+            <div>
+              <label for="need">What do you need?</label>
+              <select id="need" name="need">
+                <option value="">Select one</option>
+                <option>Web development</option>
+                <option>CRM building</option>
+                <option>Business automation</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div>
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" disabled>Send message</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </section>
+</BaseLayout>

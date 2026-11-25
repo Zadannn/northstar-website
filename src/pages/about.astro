@@ -1,0 +1,41 @@
+---
+import Cta from "../components/Cta.astro";
+import PageHero from "../components/PageHero.astro";
+import Photo from "../components/Photo.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site, trades } from "../config/site";
+---
+
+<BaseLayout
+  title="About"
+  description="Northstar is a small New Jersey agency for local-service businesses. Websites, CRMs, and practical automations."
+>
+  <PageHero
+    kicker="About"
+    title="A small New Jersey agency."
+    lede={`${site.name} works with local-service businesses. The goal is practical: a website people can use, a customer list your office will actually open, and automations that match the way you already work.`}
+  />
+
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <h2>Who you will talk to</h2>
+        <p>
+          You will talk to the people doing the work. We are not a call center, and we are not a large firm with a
+          separate sales team.
+        </p>
+        <p>
+          Until launch, treat the phone number, email, photos, and prices on this site as stand-ins. The business name
+          lives in one config file so it can be changed in a single place.
+        </p>
+        <h2>Who we work with</h2>
+        <ul class="pills">
+          {trades.map((trade) => <li>{trade}</li>)}
+        </ul>
+      </div>
+      <Photo {...site.photos.about} />
+    </div>
+  </section>
+
+  <Cta />
+</BaseLayout>

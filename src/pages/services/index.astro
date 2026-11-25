@@ -1,0 +1,46 @@
+---
+import Cta from "../../components/Cta.astro";
+import Photo from "../../components/Photo.astro";
+import Price from "../../components/Price.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { services, site } from "../../config/site";
+---
+
+<BaseLayout
+  title="Services"
+  description="Web development, CRM building, and business automation for New Jersey local-service businesses."
+>
+  <header class="page-hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker">Services</p>
+        <h1>Websites, customer records, and the busywork in between.</h1>
+        <p class="lede">
+          Pick one place to start. A site that gets calls, a CRM your office will open, or an automation that stops a
+          task from living in someone's head. Prices below are placeholders.
+        </p>
+      </div>
+      <Photo {...site.photos.work} />
+    </div>
+  </header>
+
+  <section class="section" aria-label="Service list">
+    <div class="wrap">
+      <div class="card-grid">
+        {
+          services.map((service) => (
+            <article class="card" id={service.slug}>
+              <h2>
+                <a href={`/services/${service.slug}`}>{service.title}</a>
+              </h2>
+              <p>{service.summary}</p>
+              <Price amount={site.prices[service.priceKey]} />
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <Cta heading="Not sure which one you need?" text="Describe the shop and the task that keeps slipping. We will tell you where to start." />
+</BaseLayout>

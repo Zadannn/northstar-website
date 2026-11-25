@@ -1,0 +1,47 @@
+---
+import Mark from "./Mark.astro";
+import { nav, site } from "../config/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="logo-lockup">
+        <Mark size={26} />
+        <span>{site.name}</span>
+      </p>
+      <p>
+        Websites, CRMs, and automations for local-service businesses in {site.location}.
+      </p>
+    </div>
+    <address>
+      <p class="contact-line">
+        <span class="placeholder-tag">Placeholder</span>
+        <a href={site.phoneHref}>{site.phoneDisplay}</a>
+      </p>
+      <p class="contact-line">
+        <span class="placeholder-tag">Placeholder</span>
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+    </address>
+    <nav aria-label="Footer">
+      <ul class="footer-nav">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap">
+    <p class="legal">
+      © {year} {site.name}.
+      {site.draft && " Draft website — not published yet."}
+    </p>
+  </div>
+</footer>

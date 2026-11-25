@@ -1,0 +1,90 @@
+---
+import Cta from "../components/Cta.astro";
+import Photo from "../components/Photo.astro";
+import Price from "../components/Price.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { services, site, steps, trades } from "../config/site";
+---
+
+<BaseLayout
+  title="Websites, CRMs, and automations for New Jersey service businesses"
+  description={site.description}
+>
+  <header class="page-hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker">{site.name} · {site.location}</p>
+        <h1>Websites, CRMs, and automations for New Jersey service businesses.</h1>
+        <p class="lede">
+          {site.name} is a small agency. We help local companies that book work by phone — trades, home services,
+          clinics, and shops — get a site people can use, a record of their customers, and a few automations that save
+          the day.
+        </p>
+        <div class="button-row">
+          <a class="button" href="/services">See the services</a>
+          <a class="button button-secondary" href="/contact">Contact</a>
+        </div>
+      </div>
+      <Photo {...site.photos.hero} priority />
+    </div>
+  </header>
+
+  <section class="section" aria-labelledby="services-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="services-heading">Three kinds of work</h2>
+        <p>Most clients start with one. Prices on this draft are placeholders.</p>
+      </div>
+      <div class="card-grid">
+        {
+          services.map((service, index) => (
+            <article class="card">
+              <p class="index-num">{String(index + 1).padStart(2, "0")}</p>
+              <h3>
+                <a href={`/services/${service.slug}`}>{service.title}</a>
+              </h3>
+              <p>{service.summary}</p>
+              <Price amount={site.prices[service.priceKey]} />
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="who-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="who-heading">Who it is for</h2>
+        <p>If your customers call, text, or walk in, and the work happens nearby, you are who we build for.</p>
+      </div>
+      <ul class="pills">
+        {trades.map((trade) => <li>{trade}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="process-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="process-heading">How it works</h2>
+        <p>Four steps. No long proposal before we understand the shop.</p>
+      </div>
+      <ol class="steps">
+        {
+          steps.map((step) => (
+            <li class="step">
+              <h3>{step.title}</h3>
+              <p>{step.summary}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="button-row">
+        <a class="button button-secondary" href="/how-it-works">Read the full process</a>
+      </div>
+    </div>
+  </section>
+
+  <Cta />
+</BaseLayout>

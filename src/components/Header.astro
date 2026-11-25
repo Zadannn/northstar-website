@@ -1,0 +1,57 @@
+---
+import Mark from "./Mark.astro";
+import { nav, site } from "../config/site";
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+function isCurrent(href: string): boolean {
+  if (href === "/") return path === "/";
+  return path === href || path.startsWith(`${href}/`);
+}
+---
+
+<header class="site-header">
+  <div class="wrap header-shell">
+    <a class="logo" href="/">
+      <Mark />
+      <span class="logo-text">
+        {site.name}
+        <small>{site.location}</small>
+      </span>
+      <span class="visually-hidden"> home</span>
+    </a>
+    <details class="menu">
+      <summary class="nav-toggle">
+        <span class="nav-toggle-open">Menu</span>
+        <span class="nav-toggle-close">Close</span>
+      </summary>
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="nav-list">
+          {
+            nav.map((item) => (
+              <li>
+                <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

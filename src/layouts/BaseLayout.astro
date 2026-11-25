@@ -1,0 +1,49 @@
+---
+import "../styles/global.css";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { site } from "../config/site";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const documentTitle = `${title} · ${site.name}`;
+const canonical = new URL(Astro.url.pathname, site.siteUrl).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {site.draft && <meta name="robots" content="noindex, nofollow" />}
+    <title>{documentTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#1f4a3a" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="top">
+      {
+        site.draft && (
+          <div class="draft-banner" role="region" aria-label="Draft notice">
+            <p>
+              <strong>Draft.</strong> This site is not live. The business name, phone, email, photos, and prices are
+              placeholders, and search engines are asked not to list these pages.
+            </p>
+          </div>
+        )
+      }
+      <Header />
+    </div>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

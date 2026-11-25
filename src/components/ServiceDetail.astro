@@ -1,0 +1,47 @@
+---
+import Cta from "./Cta.astro";
+import PageHero from "./PageHero.astro";
+import Price from "./Price.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { services, site, type Service } from "../config/site";
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const others = services.filter((item) => item.slug !== service.slug);
+---
+
+<BaseLayout title={service.title} description={service.summary}>
+  <PageHero kicker="Services" title={service.title} lede={service.lede} />
+
+  <section class="section" aria-labelledby="included-heading">
+    <div class="wrap split">
+      <div>
+        <h2 id="included-heading">What is included</h2>
+        <ul class="checklist">
+          {service.included.map((item) => <li>{item}</li>)}
+        </ul>
+        <Price amount={site.prices[service.priceKey]} />
+        <p>
+          <a href="/services">All services</a>
+        </p>
+      </div>
+      <div class="panel">
+        <h2>Other services</h2>
+        <ul class="checklist">
+          {
+            others.map((item) => (
+              <li>
+                <a href={`/services/${item.slug}`}>{item.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Cta />
+</BaseLayout>

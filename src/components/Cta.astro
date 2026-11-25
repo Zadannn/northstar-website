@@ -1,0 +1,26 @@
+---
+import { site } from "../config/site";
+
+interface Props {
+  heading?: string;
+  text?: string;
+}
+
+const {
+  heading = "Start with a conversation.",
+  text = "Call or email. The form on the contact page is turned off and does not send messages yet.",
+} = Astro.props;
+---
+
+<section class="section" aria-labelledby="cta-heading">
+  <div class="wrap">
+    <div class="cta">
+      <h2 id="cta-heading">{heading}</h2>
+      <p>{text}</p>
+      <div class="button-row">
+        <a class="button" href="/contact">Go to the contact page</a>
+        <a class="button button-secondary" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+      </div>
+    </div>
+  </div>
+</section>

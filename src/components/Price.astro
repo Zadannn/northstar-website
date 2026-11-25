@@ -1,0 +1,12 @@
+---
+interface Props {
+  amount: string;
+}
+
+const { amount } = Astro.props;
+---
+
+<p class="price">
+  <span class="placeholder-tag">Placeholder</span>
+  <span>Price: {amount}</span>
+</p>
