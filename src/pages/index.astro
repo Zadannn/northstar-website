@@ -2,45 +2,22 @@
 import Cta from "../components/Cta.astro";
 import Faq from "../components/Faq.astro";
 import HeroVisual from "../components/HeroVisual.astro";
+import ProjectList from "../components/ProjectList.astro";
 import ServiceCard from "../components/ServiceCard.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import {
-  businessTypes,
-  notes,
-  positioning,
-  principles,
-  problems,
-  serviceHref,
-  services,
-  paths,
-  site,
-  steps,
-  workflow,
-} from "../config/site";
+import { businessTypes, notes, paths, principles, problems, services, site, steps } from "../config/site";
 ---
 
-<BaseLayout title="Websites, CRM setup, and business automation" description={site.description}>
+<BaseLayout title="Professional websites for businesses ready to grow" description={site.description}>
   <header class="page-hero home-hero">
     <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow">Websites, CRM, and automation</p>
-        <h1>Better digital experiences. Smarter business operations.</h1>
+        <p class="eyebrow">Website development</p>
+        <h1>Professional websites for businesses ready to grow.</h1>
         <p class="lede">
-          {site.name} helps small businesses and growing companies improve a digital presence, organise customer
-          information, and simplify repetitive processes. Each service stands on its own.
+          We build modern, responsive websites that help small businesses establish a stronger online presence and
+          make it easier for customers to get in touch.
         </p>
-        <ul class="hero-services">
-          {
-            services.map((service, index) => (
-              <li>
-                <a href={serviceHref(service.slug)}>
-                  <span class="hero-index">{String(index + 1).padStart(2, "0")}</span>
-                  {service.title}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
         <div class="button-row">
           <a class="button" href={site.cta.href}>{site.cta.label}</a>
           <a class="button button-secondary" href={site.secondaryCta.href}>{site.secondaryCta.label}</a>
@@ -50,43 +27,33 @@ import {
     </div>
   </header>
 
-  <section class="section" aria-labelledby="practice-heading">
-    <div class="wrap split">
-      <div>
-        <p class="eyebrow">The practice</p>
-        <h2 id="practice-heading">A clearer presence, and operations that are easier to run.</h2>
-        <p class="lede">{positioning.detail}</p>
-      </div>
-      <div class="panel practice-panel">
-        <h3>What we take on</h3>
-        <ul class="checklist">
-          {
-            services.map((service) => (
-              <li>
-                <a href={serviceHref(service.slug)}>{service.title}</a>
-              </li>
-            ))
-          }
-        </ul>
-        <h3>What we do not claim</h3>
-        <ul class="checklist checklist-muted">
-          <li>A CRM, automation platform, or AI product of our own</li>
-          <li>Guaranteed rankings, revenue, or a fixed launch date</li>
-          <li>Work limited to one industry or one region</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-join" aria-labelledby="services-heading">
+  <section class="section" aria-labelledby="services-heading">
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Services</p>
-        <h2 id="services-heading">Three services, equal in weight.</h2>
-        <p>Use one, or combine them. Nothing here is a bundle you have to buy.</p>
+        <h2 id="services-heading">Six website services, clearly scoped.</h2>
+        <p>Use one, or combine them in a single written plan. We do not sell a software product.</p>
       </div>
       <div class="card-grid">
-        {services.map((service) => <ServiceCard service={service} />)}
+        {services.map((service, index) => <ServiceCard service={service} index={index} />)}
+      </div>
+      <p class="note">
+        We do not promise rankings, traffic, leads, or revenue.
+        <a href={paths.webDevelopment}>Read the website scope</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section band" id="selected-work" aria-labelledby="work-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Selected work</p>
+        <h2 id="work-heading">One website, shown as it is.</h2>
+        <p>{notes.work}</p>
+      </div>
+      <ProjectList headingLevel="h3" />
+      <div class="button-row">
+        <a class="button button-secondary" href={paths.ourWork}>See our work</a>
       </div>
     </div>
   </section>
@@ -95,8 +62,8 @@ import {
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">The problems</p>
-        <h2 id="problems-heading">Familiar friction, before any new tool.</h2>
-        <p>Owners usually come to us with one of these, sometimes with all four.</p>
+        <h2 id="problems-heading">Familiar friction, before a new website.</h2>
+        <p>Owners usually come to us with one of these, sometimes with more than one.</p>
       </div>
       <ul class="problem-grid">
         {
@@ -109,27 +76,6 @@ import {
           ))
         }
       </ul>
-    </div>
-  </section>
-
-  <section class="section band" aria-labelledby="workflow-heading">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Connected work</p>
-        <h2 id="workflow-heading">One way the services can meet.</h2>
-        <p>{notes.workflow}</p>
-      </div>
-      <ol class="workflow">
-        {
-          workflow.map((step, index) => (
-            <li>
-              <span class="flow-index">{index + 1}</span>
-              <h3>{step.title}</h3>
-              <p>{step.summary}</p>
-            </li>
-          ))
-        }
-      </ol>
     </div>
   </section>
 

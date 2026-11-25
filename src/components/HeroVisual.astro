@@ -1,93 +1,71 @@
 ---
-import { preview, workflow } from "../config/site";
+import { preview } from "../config/site";
+
+const sample = preview.website;
 ---
 
 <figure class="hv">
-  <div class="hv-stage" aria-hidden="true">
-    <article class="hv-browser">
+  <div class="hv-stage">
+    <article class="hv-browser" aria-hidden="true">
       <div class="hv-chrome">
         <span class="hv-dot"></span>
         <span class="hv-dot"></span>
         <span class="hv-dot"></span>
-        <span class="hv-url">{preview.website.url}</span>
+        <span class="hv-url">{sample.url}</span>
       </div>
       <div class="hv-site">
-        <p class="hv-kicker">{preview.website.kicker}</p>
-        <p class="hv-name">{preview.website.name}</p>
-        <p class="hv-navline">
-          {preview.website.nav.map((item) => <span>{item}</span>)}
-        </p>
-        <p class="hv-headline">{preview.website.headline}</p>
+        <div class="hv-top">
+          <p class="hv-name">{sample.name}</p>
+          <p class="hv-navline">
+            {sample.nav.map((item) => <span>{item}</span>)}
+          </p>
+        </div>
+        <p class="hv-kicker">{sample.kicker}</p>
+        <p class="hv-headline">{sample.headline}</p>
+        <p class="hv-text">{sample.text}</p>
         <p class="hv-items">
-          {preview.website.items.map((item) => <span>{item}</span>)}
+          {sample.items.map((item) => <span>{item}</span>)}
         </p>
-        <span class="hv-action">{preview.website.action}</span>
+        <span class="hv-action">{sample.action}</span>
       </div>
     </article>
-    <div class="hv-lower">
-      <article class="hv-crm">
-        <header class="hv-panel-head">
-          <p>{preview.crm.title}</p>
-          <span>{preview.crm.kicker}</span>
-        </header>
-        <ul>
-          {
-            preview.crm.rows.map((row) => (
-              <li>
-                <span class="hv-who">
-                  <strong>{row.name}</strong>
-                  <span>{row.detail}</span>
-                </span>
-                <span class="hv-status">{row.status}</span>
-              </li>
-            ))
-          }
-        </ul>
-      </article>
-      <article class="hv-flow">
-        <header class="hv-panel-head">
-          <p>{preview.automation.title}</p>
-          <span>{preview.automation.kicker}</span>
-        </header>
-        <ol>
-          {
-            workflow.map((step, index) => (
-              <li>
-                <span>{index + 1}</span>
-                {step.title}
-              </li>
-            ))
-          }
-        </ol>
-      </article>
-    </div>
+    <article class="hv-phone" aria-hidden="true">
+      <div class="hv-speaker"></div>
+      <div class="hv-site hv-site-phone">
+        <p class="hv-kicker">{sample.kicker}</p>
+        <p class="hv-name">{sample.name}</p>
+        <p class="hv-headline">{sample.headline}</p>
+        <span class="hv-action">{sample.action}</span>
+      </div>
+    </article>
   </div>
   <figcaption>{preview.disclaimer}</figcaption>
 </figure>
 
 <style>
   .hv {
+    min-width: 0;
+    max-width: 100%;
     margin: 0;
-    padding: 0.85rem;
-    background: var(--color-bg-muted);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
   }
 
   .hv-stage {
     display: grid;
-    gap: 0.75rem;
+    gap: 0.85rem;
+    min-width: 0;
   }
 
   .hv-browser,
-  .hv-crm,
-  .hv-flow {
+  .hv-phone {
+    min-width: 0;
     background: var(--color-bg-raised);
     border: 1px solid var(--color-line);
-    border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
-    min-width: 0;
+  }
+
+  .hv-browser {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
   }
 
   .hv-chrome {
@@ -96,6 +74,7 @@ import { preview, workflow } from "../config/site";
     gap: 0.35rem;
     padding: 0.55rem 0.7rem;
     border-bottom: 1px solid var(--color-line);
+    background: var(--color-bg-muted);
   }
 
   .hv-dot {
@@ -115,16 +94,24 @@ import { preview, workflow } from "../config/site";
     font-size: 0.75rem;
     text-overflow: ellipsis;
     white-space: nowrap;
-    background: var(--color-bg);
+    background: var(--color-bg-raised);
     border-radius: 999px;
   }
 
   .hv-site {
-    padding: 0.9rem 0.95rem 1rem;
+    padding: 0.95rem 1rem 1.1rem;
   }
 
-  .hv-kicker,
-  .hv-panel-head span {
+  .hv-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.35rem 0.75rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .hv-kicker {
     margin: 0;
     color: var(--color-accent);
     font-size: 0.68rem;
@@ -134,47 +121,51 @@ import { preview, workflow } from "../config/site";
   }
 
   .hv-name {
-    margin: 0.35rem 0 0;
+    margin: 0;
     font-family: var(--font-display);
     font-size: 0.95rem;
     font-weight: 700;
+    letter-spacing: -0.03em;
   }
 
   .hv-navline {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.45rem 0.75rem;
-    margin: 0.35rem 0 0.85rem;
+    gap: 0.35rem 0.7rem;
+    margin: 0;
     color: var(--color-ink-soft);
     font-size: 0.75rem;
   }
 
   .hv-headline {
-    margin: 0;
+    margin: 0.45rem 0 0;
     max-width: 16rem;
     font-family: var(--font-display);
-    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-size: clamp(1.25rem, 2.2vw, 1.7rem);
     font-weight: 680;
     letter-spacing: -0.03em;
-    line-height: 1.15;
+    line-height: 1.12;
+  }
+
+  .hv-text {
+    margin: 0.7rem 0 0;
+    max-width: 22rem;
+    color: var(--color-ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.45;
   }
 
   .hv-items {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
-    margin: 0.85rem 0;
-  }
-
-  .hv-items span,
-  .hv-action,
-  .hv-status {
-    font-size: 0.75rem;
+    margin: 0.9rem 0;
   }
 
   .hv-items span {
-    padding: 0.22rem 0.45rem;
+    padding: 0.22rem 0.5rem;
     color: var(--color-ink-soft);
+    font-size: 0.75rem;
     border: 1px solid var(--color-line);
     border-radius: var(--radius-sm);
   }
@@ -182,105 +173,63 @@ import { preview, workflow } from "../config/site";
   .hv-action {
     display: inline-flex;
     max-width: 100%;
-    padding: 0.4rem 0.65rem;
+    padding: 0.42rem 0.7rem;
     color: var(--color-bg-raised);
+    font-size: 0.78rem;
     font-weight: 650;
     background: var(--color-ink);
     border-radius: var(--radius-sm);
   }
 
-  .hv-lower {
-    display: grid;
-    gap: 0.75rem;
+  .hv-phone {
+    width: min(100%, 11.25rem);
+    margin-inline: auto;
+    padding: 0.45rem 0.45rem 0.7rem;
+    border-radius: 1.35rem;
   }
 
-  .hv-panel-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    padding: 0.65rem 0.75rem;
-    border-bottom: 1px solid var(--color-line);
+  .hv-speaker {
+    width: 2.2rem;
+    height: 0.28rem;
+    margin: 0.2rem auto 0.55rem;
+    border-radius: 999px;
+    background: var(--color-line-strong);
   }
 
-  .hv-panel-head p {
-    margin: 0;
-    font-size: 0.84rem;
-    font-weight: 650;
+  .hv-site-phone {
+    padding: 0.35rem 0.45rem 0.55rem;
   }
 
-  .hv-crm ul,
-  .hv-flow ol {
-    list-style: none;
-    margin: 0;
-    padding: 0.35rem 0.75rem 0.7rem;
+  .hv-site-phone .hv-name {
+    margin-top: 0.35rem;
+    font-size: 0.82rem;
+    line-height: 1.25;
   }
 
-  .hv-crm li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    padding: 0.45rem 0;
-    border-top: 1px solid var(--color-line);
+  .hv-site-phone .hv-headline {
+    font-size: 1rem;
+    max-width: none;
   }
 
-  .hv-crm li:first-child {
-    border-top: 0;
-  }
-
-  .hv-who {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-
-  .hv-who strong,
-  .hv-who span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .hv-who strong {
-    font-size: 0.84rem;
-  }
-
-  .hv-who span {
-    color: var(--color-ink-soft);
-    font-size: 0.75rem;
-  }
-
-  .hv-status {
-    flex: none;
-    color: var(--color-accent);
-    font-weight: 650;
-  }
-
-  .hv-flow li {
-    display: flex;
-    align-items: baseline;
-    gap: 0.45rem;
-    padding: 0.28rem 0;
-    color: var(--color-ink-soft);
-    font-size: 0.8rem;
-  }
-
-  .hv-flow li span {
-    color: var(--color-accent);
-    font-size: 0.72rem;
-    font-weight: 700;
+  .hv-site-phone .hv-action {
+    margin-top: 0.85rem;
   }
 
   .hv figcaption {
-    margin: 0.75rem 0.15rem 0.15rem;
+    margin: 0.75rem 0 0;
     color: var(--color-ink-soft);
     font-size: 0.82rem;
   }
 
-  @media (min-width: 520px) {
-    .hv-lower {
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  @media (min-width: 720px) {
+    .hv-stage {
+      grid-template-columns: minmax(0, 1fr) 10.5rem;
+      align-items: end;
+    }
+
+    .hv-phone {
+      width: auto;
+      margin: 0;
     }
   }
 </style>

@@ -1,0 +1,25 @@
+---
+import Cta from "../components/Cta.astro";
+import PageHero from "../components/PageHero.astro";
+import ProjectList from "../components/ProjectList.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { notes, site } from "../config/site";
+---
+
+<BaseLayout
+  title="Our work"
+  description={`Website projects from ${site.name}. Each one is labelled honestly, including family projects that were not paid client work.`}
+>
+  <PageHero kicker="Our work" title="Work we can actually show." lede={notes.work} />
+
+  <section class="section" aria-label="Projects">
+    <div class="wrap">
+      <ProjectList />
+    </div>
+  </section>
+
+  <Cta
+    heading="Planning a website of your own?"
+    text="Tell us what the site needs to do. We will reply with questions, then a scope if the work is a fit."
+  />
+</BaseLayout>

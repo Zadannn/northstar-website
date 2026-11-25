@@ -1,10 +1,10 @@
 # Canonical pages use a trailing slash.
-# Older addresses 301 to the current service pages.
+# Retired CRM and automation addresses 301 to the services index.
+# Older website addresses 301 to the current website-development page.
 
 /services /services/ 301
 /services/web-development /services/web-development/ 301
-/services/crm-solutions /services/crm-solutions/ 301
-/services/business-automation /services/business-automation/ 301
+/our-work /our-work/ 301
 /how-it-works /how-it-works/ 301
 /about /about/ 301
 /contact /contact/ 301
@@ -18,9 +18,13 @@
 /services/website-care /services/web-development/ 301
 /services/website-care/ /services/web-development/ 301
 
-/crm-automation /services/crm-solutions/ 301
-/crm-automation/ /services/crm-solutions/ 301
-/services/crm-building /services/crm-solutions/ 301
-/services/crm-building/ /services/crm-solutions/ 301
-/services/lead-follow-up /services/business-automation/ 301
-/services/lead-follow-up/ /services/business-automation/ 301
+/services/crm-solutions /services/ 301
+/services/crm-solutions/ /services/ 301
+/services/business-automation /services/ 301
+/services/business-automation/ /services/ 301
+/crm-automation /services/ 301
+/crm-automation/ /services/ 301
+/services/crm-building /services/ 301
+/services/crm-building/ /services/ 301
+/services/lead-follow-up /services/ 301
+/services/lead-follow-up/ /services/ 301

@@ -20,7 +20,7 @@ const year = new Date().getFullYear();
         {
           services.map((service) => (
             <li>
-              <a href={serviceHref(service.slug)}>{service.title}</a>
+              <a href={serviceHref(service.id)}>{service.title}</a>
             </li>
           ))
         }

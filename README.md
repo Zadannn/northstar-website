@@ -1,14 +1,19 @@
 # Northstar website
 
-This is the draft website for a digital solutions practice. The public name is a placeholder (`Northstar` today) and lives in one config file, so it can be replaced without editing the pages.
+This is the draft website for a website development studio. The public name is a placeholder (`Northstar` today) and lives in one config file, so it can be replaced without editing the pages.
 
-The practice serves small businesses and growing companies. It is not limited to one region or one industry. The work has three equal parts:
+The studio serves small businesses and growing companies. It is not limited to one region or one industry. The work is website development only. These six services are the ones the site promotes:
 
-- **Website development.** Business websites, landing pages, redesigns, responsive pages, contact forms, maintenance when it is agreed, and basic technical SEO and performance.
-- **CRM solutions.** Setup and configuration of a CRM the client chooses and owns: lead management, customer records, a sales pipeline, and practical integrations named in the scope.
-- **Business automation.** Clearly scoped workflows: lead capture, notifications, follow-up, form-to-CRM, and practical integrations.
+- **Business Website Development.** Professional websites that explain services, credibility, and contact information.
+- **Landing Page Development.** Focused pages for one service, campaign, or offering.
+- **Website Redesign.** Structure, usability, responsiveness, and presentation of an existing site.
+- **Responsive Website Optimisation.** Layouts that work on phones, tablets, laptops, and desktops.
+- **Basic Technical SEO.** Page titles, metadata, semantic structure, sitemap configuration, and other technical foundations. No ranking or traffic promises.
+- **Website Deployment and Handover.** Deployment setup, domain connection guidance, and a documented handover.
 
-The site does not offer a CRM or automation platform of its own, an enterprise rollout, an advanced AI product, or unlimited custom integrations. It does not promise rankings, revenue, or a launch date. Service pages say what is included and what is not. There are no invented customers, testimonials, case studies, or statistics.
+Limited website maintenance can be mentioned only with a written limit on what is included. CRM implementation, business automation, custom CRM software, AI agents, complex integrations, and enterprise software are not offerings. The site does not promise rankings, revenue, leads, or a launch date. There are no invented customers, testimonials, or statistics.
+
+Our Work lists real projects from `projects` in the config. Wonder Kitchen is a family project (a home cloud kitchen website), not a paid client. The images are screenshots of the live site.
 
 The site is a **draft**. A banner at the top of every page says Draft. Search engines are asked not to list the pages. Nothing in this repository publishes the site.
 
@@ -17,12 +22,12 @@ The site is built with [Astro](https://astro.build) 5.18.2, TypeScript, and plai
 ## Folder structure
 
 ```text
-src/pages/            Routes: home, services, three service pages, how it works, about, contact, privacy, terms, and the 404 page, plus robots.txt and sitemap.xml
+src/pages/            Routes: home, services, website development, our work, how it works, about, contact, privacy, terms, and the 404 page, plus robots.txt and sitemap.xml
 src/layouts/          Shared frame: draft banner, metadata, header, and footer
-src/components/       Header, footer, wordmark, hero visual, page hero, service cards, CTA, FAQ, and the contact details
+src/components/       Header, footer, wordmark, hero visual, page hero, service cards, project list, CTA, FAQ, and the contact details
 src/styles/           fonts.css and global.css. Colours, type, and spacing are CSS variables.
-src/config/site.ts    Name, logo, phone, email, draft switches, services, process, FAQ, and the form address
-public/               Favicon, stand-in pictures, and public/_redirects for older URLs.
+src/config/site.ts    Name, logo, phone, email, draft switches, services, projects, process, FAQ, and the form address
+public/               Favicon, stand-in pictures, project screenshots, and public/_redirects for older URLs.
 dist/                 The built site. Not saved in git.
 .github/workflows/    A check that the site builds on Node.js 20. It does not publish the site.
 ```
@@ -73,7 +78,7 @@ Open `src/config/site.ts`. This is the one file for:
 - `showPricing` (keep `false` until prices are agreed; the site does not render `prices` while this is false)
 - `placeholders.contact` (keep `true` until the phone and email are real; the Placeholder labels follow this switch)
 - `placeholders.photos` (while `true`, stand-in photos are not shown)
-- Services, FAQ answers, process steps, problems, principles, and the example homepage visual
+- Services, projects, FAQ answers, process steps, problems, principles, and the example homepage visual
 
 Colours and the type stack live in `src/styles/global.css` as custom properties (`--color-*`, `--font-body`, `--font-display`). The font files are declared in `src/styles/fonts.css`. Change those two places to rebrand the look. Components do not hard-code a logo symbol or a colour.
 
@@ -115,4 +120,4 @@ This project is not deployed. Nothing in this repository publishes the site, cha
 
 A later host can build with `npm run build` and serve the `dist` folder. Leave `draft` set to `true` until the checklist above is done.
 
-`public/_redirects` sends older addresses to the current service pages with a 301, and sends each canonical page without a trailing slash to the same page with one. The live pages are `/services/web-development/`, `/services/crm-solutions/`, and `/services/business-automation/`. Internal links use that trailing slash. `astro.config.ts` sets `trailingSlash` to `always` and `build.format` to `directory`. The local preview server does not apply `_redirects`. A host that understands it, such as Cloudflare Pages, does. Astro's own preview does redirect a missing slash to the trailing-slash URL.
+`public/_redirects` sends older addresses to the current pages with a 301, and sends each canonical page without a trailing slash to the same page with one. Retired CRM and automation addresses, including `/services/crm-solutions/`, `/services/business-automation/`, `/crm-automation/`, `/services/crm-building/`, and `/services/lead-follow-up/`, go to `/services/`. Older website addresses go to `/services/web-development/`. Internal links use a trailing slash. `astro.config.ts` sets `trailingSlash` to `always` and `build.format` to `directory`. The local preview server does not apply `_redirects`, so a slashless path or a retired address 404s there even though the file lists a 301. A host that understands `_redirects`, such as Cloudflare Pages, applies those rules. Those retired paths are not generated as Astro redirect pages, so a draft build does not advertise `https://example.com` as their canonical address.

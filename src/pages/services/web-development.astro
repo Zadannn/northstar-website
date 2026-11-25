@@ -1,6 +1,64 @@
 ---
-import ServiceDetail from "../../components/ServiceDetail.astro";
-import { getService } from "../../config/site";
+import Cta from "../../components/Cta.astro";
+import PageHero from "../../components/PageHero.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { notes, outOfScope, paths, services, site } from "../../config/site";
 ---
 
-<ServiceDetail service={getService("web-development")} />
+<BaseLayout
+  title="Website development"
+  description="Business websites, landing pages, redesigns, responsive layout, basic technical SEO, and deployment with a documented handover. No ranking or traffic promises."
+>
+  <PageHero
+    kicker="Services"
+    title="Website development, agreed before we build."
+    lede="Six services, from a full business site to deployment and handover. A project can use one of them or several. The written scope says which."
+  />
+
+  <section class="section" aria-labelledby="services-detail-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="services-detail-heading">The six services</h2>
+        <p>{notes.scope}</p>
+      </div>
+      <div class="section-grid">
+        {
+          services.map((service) => (
+            <article class="panel" id={service.id}>
+              <h3>{service.title}</h3>
+              <p>{service.summary}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="limits-heading">
+    <div class="wrap detail-layout">
+      <div>
+        <h2 id="limits-heading">Outside this work</h2>
+        <ul class="checklist checklist-muted">
+          {outOfScope.map((item) => <li>{item}</li>)}
+        </ul>
+        <p class="note">
+          Basic technical SEO is the foundations named above. It is not a ranking service and it does not include a
+          traffic target.
+        </p>
+      </div>
+      <aside class="panel">
+        <h2>Limited maintenance</h2>
+        <p>{notes.maintenance}</p>
+        <div class="button-row">
+          <a class="button" href={site.cta.href}>{site.cta.label}</a>
+          <a class="button button-secondary" href={paths.services}>All services</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <Cta
+    heading="Planning a site, or replacing one?"
+    text="Tell us what the site needs to do. We will reply with questions, then a scope if the work is a fit."
+  />
+</BaseLayout>
