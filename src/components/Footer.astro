@@ -13,16 +13,16 @@ const year = new Date().getFullYear();
         <span>{site.name}</span>
       </p>
       <p>
-        Websites, CRMs, and automations for local-service businesses in {site.location}.
+        Websites and lead follow-up for local-service businesses in {site.location}.
       </p>
     </div>
     <address>
       <p class="contact-line">
-        <span class="placeholder-tag">Placeholder</span>
+        {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
         <a href={site.phoneHref}>{site.phoneDisplay}</a>
       </p>
       <p class="contact-line">
-        <span class="placeholder-tag">Placeholder</span>
+        {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
         <a href={`mailto:${site.email}`}>{site.email}</a>
       </p>
     </address>

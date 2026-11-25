@@ -12,6 +12,19 @@ interface Props {
 const { title, description } = Astro.props;
 const documentTitle = `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.siteUrl).href;
+
+// Structured data is only added once the site is live and the contact details are real.
+const structuredData = site.draft
+  ? null
+  : {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      name: site.name,
+      url: site.siteUrl,
+      description: site.description,
+      areaServed: site.location,
+      ...(site.placeholders.contact ? {} : { telephone: site.phoneDisplay, email: site.email }),
+    };
 ---
 
 <!doctype html>
@@ -25,6 +38,13 @@ const canonical = new URL(Astro.url.pathname, site.siteUrl).href;
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#1f4a3a" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={documentTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

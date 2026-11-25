@@ -7,18 +7,18 @@ import { services, site, steps, trades } from "../config/site";
 ---
 
 <BaseLayout
-  title="Websites, CRMs, and automations for New Jersey service businesses"
+  title="Clear websites and lead follow-up for New Jersey service businesses"
   description={site.description}
 >
   <header class="page-hero">
     <div class="wrap hero-grid">
       <div>
-        <p class="kicker">{site.name} · {site.location}</p>
-        <h1>Websites, CRMs, and automations for New Jersey service businesses.</h1>
+        <p class="kicker">{site.name} · Serving {site.location}</p>
+        <h1>Clear, mobile-friendly websites for New Jersey home-service businesses.</h1>
         <p class="lede">
-          {site.name} is a small agency. We help local companies that book work by phone — trades, home services,
-          clinics, and shops — get a site people can use, a record of their customers, and a few automations that save
-          the day.
+          {site.name} is a small US–India team. We build simple websites for cleaners, landscapers, plumbers, and HVAC
+          companies, so customers can see what you do and call or ask for a quote. We can also set up the follow-up, so
+          enquiries do not go cold.
         </p>
         <div class="button-row">
           <a class="button" href="/services">See the services</a>
@@ -32,8 +32,8 @@ import { services, site, steps, trades } from "../config/site";
   <section class="section" aria-labelledby="services-heading">
     <div class="wrap">
       <div class="section-head">
-        <h2 id="services-heading">Three kinds of work</h2>
-        <p>Most clients start with one. Prices on this draft are placeholders.</p>
+        <h2 id="services-heading">What we offer</h2>
+        <p>Most clients start with a website. Prices on this draft are placeholders.</p>
       </div>
       <div class="card-grid">
         {
@@ -56,7 +56,10 @@ import { services, site, steps, trades } from "../config/site";
     <div class="wrap">
       <div class="section-head">
         <h2 id="who-heading">Who it is for</h2>
-        <p>If your customers call, text, or walk in, and the work happens nearby, you are who we build for.</p>
+        <p>
+          Owner-run service businesses where customers call or ask for a quote. We are starting with four trades so we
+          can do them well.
+        </p>
       </div>
       <ul class="pills">
         {trades.map((trade) => <li>{trade}</li>)}
@@ -68,7 +71,7 @@ import { services, site, steps, trades } from "../config/site";
     <div class="wrap">
       <div class="section-head">
         <h2 id="process-heading">How it works</h2>
-        <p>Four steps. No long proposal before we understand the shop.</p>
+        <p>Four steps, with a written scope and price before any work starts.</p>
       </div>
       <ol class="steps">
         {

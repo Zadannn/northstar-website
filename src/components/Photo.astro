@@ -1,4 +1,6 @@
 ---
+import { site } from "../config/site";
+
 interface Props {
   src: string;
   alt: string;
@@ -19,7 +21,7 @@ const { src, alt, caption, priority = false } = Astro.props;
     fetchpriority={priority ? "high" : undefined}
   />
   <figcaption>
-    <span class="placeholder-tag">Placeholder</span>
+    {site.placeholders.photos && <span class="placeholder-tag">Placeholder</span>}
     <span>{caption}</span>
   </figcaption>
 </figure>

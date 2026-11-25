@@ -8,12 +8,12 @@ import { site, trades } from "../config/site";
 
 <BaseLayout
   title="About"
-  description="Northstar is a small New Jersey agency for local-service businesses. Websites, CRMs, and practical automations."
+  description="Northstar is a small US–India team building websites and simple lead follow-up for New Jersey home-service businesses."
 >
   <PageHero
     kicker="About"
-    title="A small New Jersey agency."
-    lede={`${site.name} works with local-service businesses. The goal is practical: a website people can use, a customer list your office will actually open, and automations that match the way you already work.`}
+    title="A small US–India team, focused on New Jersey service businesses."
+    lede={`${site.name} builds practical things for local-service businesses: a website people can use, upkeep you do not have to think about, and a few automations that match the way you already work.`}
   />
 
   <section class="section">
@@ -21,17 +21,28 @@ import { site, trades } from "../config/site";
       <div>
         <h2>Who you will talk to</h2>
         <p>
-          You will talk to the people doing the work. We are not a call center, and we are not a large firm with a
-          separate sales team.
+          Your main contact is on the US side. They listen to what you need, collect your content and feedback, and keep
+          you updated. The website itself is built and tested by our technical lead, working remotely from India. Scope,
+          price, and timeline are agreed between the two of us before anything is promised to you.
         </p>
         <p>
-          Until launch, treat the phone number, email, photos, and prices on this site as stand-ins. The business name
-          lives in one config file so it can be changed in a single place.
+          We are a small team, not a large firm with a sales department. That means you deal with the people doing the
+          work, and we only take on what we can deliver well.
         </p>
         <h2>Who we work with</h2>
+        <p>We are starting with these trades so we can learn them properly:</p>
         <ul class="pills">
           {trades.map((trade) => <li>{trade}</li>)}
         </ul>
+        <h2>How we work</h2>
+        <ul class="checklist">
+          <li>Written scope and price before work starts</li>
+          <li>You own your domain and accounts</li>
+          <li>No guaranteed rankings or leads, and no made-up reviews or case studies</li>
+        </ul>
+        <p class="note">
+          Until launch, treat the contact details, photos, and prices on this site as stand-ins.
+        </p>
       </div>
       <Photo {...site.photos.about} />
     </div>

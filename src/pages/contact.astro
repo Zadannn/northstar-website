@@ -2,16 +2,21 @@
 import PageHero from "../components/PageHero.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../config/site";
+
+// The form only turns on once a form service address is set in src/config/site.ts.
+const formLive = Boolean(site.formEndpoint);
 ---
 
 <BaseLayout
   title="Contact"
-  description="Call or email Northstar. The contact form is visible but turned off until a form backend exists."
+  description="Call, email, or send a message to Northstar. Tell us what you do and which towns you serve."
 >
   <PageHero
     kicker="Contact"
     title="Tell us what you want to fix."
-    lede="The form on this page is switched off. It does not send anything, and there is no inbox behind it. Call or email, and include what you do, the town you serve, and whether you want a website, a CRM, automation, or help choosing."
+    lede={formLive
+      ? "Send a message or call. Tell us what you do, which towns you serve, and whether you want a website, care for an existing site, or help with follow-up."
+      : "The form on this page is switched off. It does not send anything, and there is no inbox behind it. Call or email, and include what you do, the towns you serve, and whether you want a website, care for an existing site, or help with follow-up."}
   />
 
   <section class="section">
@@ -19,21 +24,30 @@ import { site } from "../config/site";
       <div>
         <h2>Phone and email</h2>
         <p class="contact-line">
-          <span class="placeholder-tag">Placeholder</span>
+          {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
           <a class="contact-value" href={site.phoneHref}>{site.phoneDisplay}</a>
         </p>
         <p class="contact-line">
-          <span class="placeholder-tag">Placeholder</span>
+          {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
           <a class="contact-value" href={`mailto:${site.email}`}>{site.email}</a>
         </p>
         <p>We work with local-service businesses in {site.location}.</p>
       </div>
 
-      <form class="contact-form" aria-describedby="form-status">
+      <form
+        class="contact-form"
+        aria-describedby="form-status"
+        action={formLive ? site.formEndpoint : undefined}
+        method={formLive ? "post" : undefined}
+      >
         <p id="form-status" class="form-status">
-          This form is turned off. It does not send messages. Use the phone number or email instead.
+          {
+            formLive
+              ? "We use what you send only to reply to your enquiry. Please do not include passwords or payment details."
+              : "This form is turned off. It does not send messages. Use the phone number or email instead."
+          }
         </p>
-        <fieldset disabled>
+        <fieldset disabled={!formLive}>
           <legend>Send a message</legend>
           <div class="fields">
             <div class="fields-split">
@@ -56,21 +70,32 @@ import { site } from "../config/site";
                 <input id="business" name="business" type="text" autocomplete="organization" />
               </div>
             </div>
-            <div>
-              <label for="need">What do you need?</label>
-              <select id="need" name="need">
-                <option value="">Select one</option>
-                <option>Web development</option>
-                <option>CRM building</option>
-                <option>Business automation</option>
-                <option>Not sure yet</option>
-              </select>
+            <div class="fields-split">
+              <div>
+                <label for="area">Town or area you serve</label>
+                <input id="area" name="area" type="text" />
+              </div>
+              <div>
+                <label for="need">What do you need?</label>
+                <select id="need" name="need">
+                  <option value="">Select one</option>
+                  <option>Website launch</option>
+                  <option>Website care for an existing site</option>
+                  <option>Lead follow-up setup</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
             </div>
             <div>
               <label for="message">Message</label>
               <textarea id="message" name="message" required></textarea>
             </div>
-            <button type="submit" disabled>Send message</button>
+            <!-- Spam trap: people never see this field, so a filled value means a bot. -->
+            <div class="hp" aria-hidden="true">
+              <label for="website-url">Leave this empty</label>
+              <input id="website-url" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+            <button type="submit" disabled={!formLive}>Send message</button>
           </div>
         </fieldset>
       </form>

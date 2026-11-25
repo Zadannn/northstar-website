@@ -493,6 +493,49 @@ main:focus {
   margin-top: 0.4rem;
 }
 
+.subhead {
+  margin-top: 1.75rem;
+  font-size: 1.35rem;
+}
+
+.checklist-muted {
+  color: var(--ink-soft);
+}
+
+.note {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.faq {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 46rem;
+}
+
+.faq details {
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0 1rem;
+}
+
+.faq summary {
+  min-height: 44px;
+  padding: 0.65rem 0;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.faq details[open] summary {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq details p {
+  margin: 0.75rem 0 1rem;
+  color: var(--ink-soft);
+}
+
 .service-block + .service-block {
   margin-top: 2rem;
   padding-top: 2rem;
@@ -586,13 +629,34 @@ main:focus {
   margin-top: 0.25rem;
   min-height: 44px;
   padding: 0.55rem 1.1rem;
-  border: 2px solid var(--line);
+  border: 2px solid var(--pine);
   border-radius: 999px;
-  background: var(--line);
-  color: var(--ink);
+  background: var(--pine);
+  color: var(--paper-2);
   font: inherit;
   font-weight: 700;
+  cursor: pointer;
+}
+
+.fields button:hover:not(:disabled) {
+  background: var(--pine-dark);
+  border-color: var(--pine-dark);
+}
+
+.fields button:disabled {
+  border-color: var(--line);
+  background: var(--line);
+  color: var(--ink);
   cursor: not-allowed;
+}
+
+/* Hidden spam-trap field. Moved off-screen rather than display:none so bots still fill it. */
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .site-footer {

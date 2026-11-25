@@ -1,10 +1,12 @@
 # Northstar website
 
-This is the starter website for Northstar, a small agency in New Jersey. Northstar helps local-service businesses — plumbers, electricians, landscapers, clinics, contractors, and similar shops — with three things:
+This is the starter website for Northstar, a small US–India team that serves New Jersey home-service businesses. It starts with four trades: cleaning companies, landscapers, plumbers, and HVAC contractors. Northstar offers three things:
 
-- Web development
-- CRM building (a system that keeps track of leads and customers)
-- Business automation
+- Website launch (up to five pages, two rounds of changes)
+- Website care (a monthly plan with written limits)
+- Lead follow-up setup (missed-call texts, a simple lead list, quote reminders, and review requests, built on a low-cost tool the client owns)
+
+The site does not offer a custom-built CRM, AI chatbots, or online stores. Those are left out on purpose until the basics are proven. Each service page lists what is included and what is not.
 
 The site is a **draft**. A banner at the top of every page says Draft. Search engines are asked not to list the pages yet. Nothing here is published to the internet by this project.
 
@@ -13,11 +15,11 @@ The site is built with [Astro](https://astro.build) 5.18.2, which turns the page
 ## Folder structure
 
 ```text
-src/pages/            The pages people visit (home, services, how it works, about, contact, and the 404 page)
+src/pages/            The pages people visit (home, services, how it works, about, contact, and the 404 page), plus robots.txt and sitemap.xml
 src/layouts/          The shared frame: Draft banner, header, navigation, and footer
-src/components/       Smaller pieces used on those pages
+src/components/       Smaller pieces used on those pages (including the FAQ list)
 src/styles/           The look of the site (plain CSS, no paid fonts or photos)
-src/config/site.ts    Business name, phone, email, photos, prices, and the website address
+src/config/site.ts    Business name, phone, email, photos, prices, services, FAQ answers, the contact form address, and the website address
 public/               The icon and the placeholder photos
 public/images/        Stand-in pictures until real photos exist
 dist/                 The finished site, created when you build. Not saved in git.
@@ -65,13 +67,25 @@ Open `src/config/site.ts`. This is the one file for:
 - Phone (`phoneDisplay` and `phoneHref`)
 - Email (`email`)
 - Photos (`photos`) — the picture files are in `public/images/`
-- Prices (`prices`) — each one currently says `Not set yet`
+- Prices (`prices`) — the starting prices come from the planning documents ($999–$1,499 for a website, $79–$129 a month for care, setup from $700 for lead follow-up). They need both founders' agreement before launch.
+- Services, FAQ answers, and the four-step process (`services`, `faqs`, `steps`) and the trades list (`trades`)
+- `placeholders` — three switches (`contact`, `prices`, `photos`). While one is `true`, the matching “Placeholder” tags show on the pages. Set each to `false` once the real phone and email, final prices, or real photos are in place.
 
 Those values show up across the site. Change them there rather than hunting through the pages.
 
-The contact form is on the Contact page, but it is **turned off**. It does not send messages anywhere. There is no server behind it. Until that changes, people should call or email.
+### The contact form
 
-Before launch, set `draft` to `false` in `src/config/site.ts`. That removes the Draft banner, the “do not index” tag, and the rule that asks robots to skip the site.
+The form on the Contact page is **turned off** until `formEndpoint` in `src/config/site.ts` has an address. While it is empty the form is greyed out and people are asked to call or email.
+
+To turn it on, create a form with a form service (for example [Formspree](https://formspree.io)), paste the form's address into `formEndpoint`, and rebuild. The form then posts to that address, and includes a hidden spam-trap field named `_gotcha`. Test it by sending yourself a message before launch. Other form services may use a different spam-trap field name.
+
+### Before launch
+
+1. Replace the name, phone, email, photos, and prices, and set the three `placeholders` switches to `false`.
+2. Set `siteUrl` to the real domain.
+3. Set `formEndpoint` and test the form.
+4. Add a privacy page that matches how you handle form messages, and check the text with a qualified adviser.
+5. Set `draft` to `false`. That removes the Draft banner, the “do not index” tag, and the rule that asks robots to skip the site. It also turns on the sitemap and the structured business data.
 
 Do not put passwords, API keys, or secret tokens in this project. None are needed to run or build the site.
 
@@ -88,4 +102,4 @@ When you are ready, [Cloudflare Pages](https://pages.cloudflare.com) can host it
 
 Cloudflare Pages will use the 404 page the build creates (`404.html`) for unknown addresses.
 
-Leave `draft` set to `true` until the real name, phone, email, photos, prices, and domain are in place.
+Leave `draft` set to `true` until the checklist above is done.

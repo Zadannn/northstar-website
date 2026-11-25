@@ -6,9 +6,13 @@ interface Props {
   text?: string;
 }
 
+const formLive = Boolean(site.formEndpoint);
+
 const {
   heading = "Start with a conversation.",
-  text = "Call or email. The form on the contact page is turned off and does not send messages yet.",
+  text = formLive
+    ? "Call, email, or send a message. Tell us what you do and which towns you serve."
+    : "Call or email. The form on the contact page is turned off and does not send messages yet.",
 } = Astro.props;
 ---
 
@@ -18,7 +22,7 @@ const {
       <h2 id="cta-heading">{heading}</h2>
       <p>{text}</p>
       <div class="button-row">
-        <a class="button" href="/contact">Go to the contact page</a>
+        <a class="button" href="/contact">Get in touch</a>
         <a class="button button-secondary" href={site.phoneHref}>Call {site.phoneDisplay}</a>
       </div>
     </div>

@@ -23,6 +23,10 @@ const others = services.filter((item) => item.slug !== service.slug);
         <ul class="checklist">
           {service.included.map((item) => <li>{item}</li>)}
         </ul>
+        <h2 id="excluded-heading" class="subhead">Not included unless agreed separately</h2>
+        <ul class="checklist checklist-muted" aria-labelledby="excluded-heading">
+          {service.notIncluded.map((item) => <li>{item}</li>)}
+        </ul>
         <Price amount={site.prices[service.priceKey]} />
         <p>
           <a href="/services">All services</a>

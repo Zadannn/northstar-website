@@ -1,4 +1,6 @@
 ---
+import { site } from "../config/site";
+
 interface Props {
   amount: string;
 }
@@ -7,6 +9,6 @@ const { amount } = Astro.props;
 ---
 
 <p class="price">
-  <span class="placeholder-tag">Placeholder</span>
+  {site.placeholders.prices && <span class="placeholder-tag">Placeholder</span>}
   <span>Price: {amount}</span>
 </p>

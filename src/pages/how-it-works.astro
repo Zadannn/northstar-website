@@ -1,5 +1,6 @@
 ---
 import Cta from "../components/Cta.astro";
+import Faq from "../components/Faq.astro";
 import PageHero from "../components/PageHero.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { steps } from "../config/site";
@@ -7,11 +8,11 @@ import { steps } from "../config/site";
 
 <BaseLayout
   title="How it works"
-  description="How a Northstar project runs: a conversation, a written plan, a build you can see, and a handoff your team can use."
+  description="How a Northstar project runs: a conversation, a written plan, a preview you can review, and a launch with a clear handover."
 >
   <PageHero
     kicker="How it works"
-    title="A short path from the first call to something your team can run."
+    title="A short path from the first call to a site you can rely on."
     lede="We keep the process small on purpose. You always know what is being built, what it will cost, and who is doing the work. The prices published on this draft are still placeholders."
   />
 
@@ -36,21 +37,23 @@ import { steps } from "../config/site";
       <article>
         <h2>What we need from you</h2>
         <ul class="checklist">
-          <li>Someone who knows how the shop actually runs</li>
-          <li>A few examples of jobs you are proud of</li>
-          <li>A person who can answer questions within a few days</li>
+          <li>Someone who knows how the business runs and can answer questions within a few days</li>
+          <li>Your logo, photos of real jobs, and a short list of the services and towns you want shown</li>
+          <li>One combined list of changes for each round of feedback</li>
         </ul>
       </article>
       <article>
         <h2>What you leave with</h2>
         <ul class="checklist">
-          <li>The site, CRM, or automation we agreed on</li>
-          <li>A walkthrough with the people who will use it</li>
-          <li>Notes for the changes you will make yourselves</li>
+          <li>The website, care plan, or follow-up setup we agreed on</li>
+          <li>Ownership of your domain and accounts, with the access details</li>
+          <li>A short guide for the changes you will make yourself</li>
         </ul>
       </article>
     </div>
   </section>
+
+  <Faq />
 
   <Cta />
 </BaseLayout>
