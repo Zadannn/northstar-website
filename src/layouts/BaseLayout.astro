@@ -1,4 +1,9 @@
 ---
+import "@fontsource/inter/latin-400.css";
+import "@fontsource/inter/latin-500.css";
+import "@fontsource/inter/latin-600.css";
+import "@fontsource/manrope/latin-600.css";
+import "@fontsource/manrope/latin-700.css";
 import "../styles/global.css";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
@@ -13,18 +18,19 @@ const { title, description } = Astro.props;
 const documentTitle = `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.siteUrl).href;
 
-// Structured data is only added once the site is live and the contact details are real.
-const structuredData = site.draft
-  ? null
-  : {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      name: site.name,
-      url: site.siteUrl,
-      description: site.description,
-      areaServed: site.location,
-      ...(site.placeholders.contact ? {} : { telephone: site.phoneDisplay, email: site.email }),
-    };
+// Structured data stays off while the site is a draft or the contact details are still placeholders.
+const structuredData =
+  site.draft || site.placeholders.contact
+    ? null
+    : {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        name: site.name,
+        url: site.siteUrl,
+        description: site.description,
+        email: site.email,
+        telephone: site.phoneDisplay,
+      };
 ---
 
 <!doctype html>
@@ -37,7 +43,7 @@ const structuredData = site.draft
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#1f4a3a" />
+    <meta name="theme-color" content="#101828" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={documentTitle} />
@@ -53,8 +59,8 @@ const structuredData = site.draft
         site.draft && (
           <div class="draft-banner" role="region" aria-label="Draft notice">
             <p>
-              <strong>Draft.</strong> This site is not live. The business name, phone, email, photos, and prices are
-              placeholders, and search engines are asked not to list these pages.
+              <strong>Draft.</strong> This site is not live. The business name, phone, and email are placeholders, and
+              search engines are asked not to list these pages.
             </p>
           </div>
         )

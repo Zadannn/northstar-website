@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../config/site";
+---
+
+<BaseLayout
+  title="Privacy policy (draft)"
+  description={`Draft privacy page for ${site.name}. Not a finished policy and not a claim of legal compliance.`}
+>
+  <header class="page-hero">
+    <div class="wrap">
+      <p class="legal-draft">Draft</p>
+      <p class="eyebrow">Privacy</p>
+      <h1>Privacy policy</h1>
+      <p class="lede">
+        This page is a draft. It is not a finished privacy policy, it is not legal advice, and it does not claim
+        compliance with any law.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>What still has to be written</h2>
+      <p>
+        Before this page can be used, it needs to say what the contact form collects, where those messages are stored,
+        who can read them, and how long they are kept. It also needs to name the form service once one is chosen.
+        Right now the form is switched off, and the phone number and email on this site are placeholders.
+      </p>
+      <p>
+        A qualified adviser should review the finished text. Until that happens, do not treat this page as a policy
+        you can rely on, and do not send sensitive information through the site.
+      </p>
+      <p><a href="/contact">Back to contact</a></p>
+    </div>
+  </section>
+</BaseLayout>

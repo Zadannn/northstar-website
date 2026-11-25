@@ -6,25 +6,18 @@ interface Props {
   text?: string;
 }
 
-const formLive = Boolean(site.formEndpoint);
-
 const {
-  heading = "Start with a conversation.",
-  text = formLive
-    ? "Call, email, or send a message. Tell us what you do and which towns you serve."
-    : "Call or email. The form on the contact page is turned off and does not send messages yet.",
+  heading = "Have an idea? Let's make it work.",
+  text = "Tell us what you're trying to improve. We'll help you explore a practical digital solution for your business.",
 } = Astro.props;
 ---
 
-<section class="section" aria-labelledby="cta-heading">
+<section class="cta-band" aria-labelledby="cta-heading">
   <div class="wrap">
-    <div class="cta">
-      <h2 id="cta-heading">{heading}</h2>
-      <p>{text}</p>
-      <div class="button-row">
-        <a class="button" href="/contact">Get in touch</a>
-        <a class="button button-secondary" href={site.phoneHref}>Call {site.phoneDisplay}</a>
-      </div>
+    <h2 id="cta-heading">{heading}</h2>
+    <p class="lede">{text}</p>
+    <div class="button-row">
+      <a class="button" href={site.cta.href}>{site.cta.label}</a>
     </div>
   </div>
 </section>

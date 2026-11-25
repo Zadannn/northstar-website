@@ -1,50 +1,52 @@
 ---
 import Cta from "../components/Cta.astro";
 import PageHero from "../components/PageHero.astro";
-import Photo from "../components/Photo.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { site, trades } from "../config/site";
+import { principles, site } from "../config/site";
 ---
 
 <BaseLayout
   title="About"
-  description="Northstar is a small US–India team building websites and simple lead follow-up for New Jersey home-service businesses."
+  description={`How ${site.name} approaches website development, CRM setup, and business automation.`}
 >
   <PageHero
-    kicker="About"
-    title="A small US–India team, focused on New Jersey service businesses."
-    lede={`${site.name} builds practical things for local-service businesses: a website people can use, upkeep you do not have to think about, and a few automations that match the way you already work.`}
+    eyebrow="About"
+    title="Practical digital work, scoped before it is built."
+    lede={`${site.name} helps businesses with websites, CRM setup, and automation. The aim is simple: the public site, the customer record, and the everyday follow-up should make the work easier, not add another system to babysit.`}
   />
 
   <section class="section">
-    <div class="wrap split">
-      <div>
-        <h2>Who you will talk to</h2>
-        <p>
-          Your main contact is on the US side. They listen to what you need, collect your content and feedback, and keep
-          you updated. The website itself is built and tested by our technical lead, working remotely from India. Scope,
-          price, and timeline are agreed between the two of us before anything is promised to you.
-        </p>
-        <p>
-          We are a small team, not a large firm with a sales department. That means you deal with the people doing the
-          work, and we only take on what we can deliver well.
-        </p>
-        <h2>Who we work with</h2>
-        <p>We are starting with these trades so we can learn them properly:</p>
-        <ul class="pills">
-          {trades.map((trade) => <li>{trade}</li>)}
-        </ul>
-        <h2>How we work</h2>
-        <ul class="checklist">
-          <li>Written scope and price before work starts</li>
-          <li>You own your domain and accounts</li>
-          <li>No guaranteed rankings or leads, and no made-up reviews or case studies</li>
-        </ul>
-        <p class="note">
-          Until launch, treat the contact details, photos, and prices on this site as stand-ins.
-        </p>
+    <div class="wrap prose">
+      <h2>How we approach a project</h2>
+      <p>
+        We start by asking what is awkward today. That might be a site people cannot understand, a pile of enquiries
+        with no shared list, or a task someone repeats after every form. We then propose the smallest setup that
+        addresses that problem, and we write down what is included.
+      </p>
+      <p>
+        We configure tools and build the pages we agreed. We do not treat a custom-built CRM, an AI product, or a
+        complex integration as the default. If the request needs that, we say so and it becomes its own scope.
+      </p>
+      <p>
+        This page does not include a company history, team biographies, or a list of past clients. Those are not
+        invented here. What you can judge is the way the work is described and the limits we put on it.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="principles-heading">
+    <div class="wrap">
+      <h2 id="principles-heading">Principles</h2>
+      <div class="principle-grid">
+        {
+          principles.map((item) => (
+            <article>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))
+        }
       </div>
-      <Photo {...site.photos.about} />
     </div>
   </section>
 

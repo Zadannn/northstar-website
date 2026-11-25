@@ -1,0 +1,40 @@
+---
+import { site } from "../config/site";
+
+interface Props {
+  href?: string;
+}
+
+const { href } = Astro.props;
+---
+
+{
+  href ? (
+    <a class="wordmark" href={href}>
+      {site.logo.src ? (
+        <img
+          src={site.logo.src}
+          alt={site.logo.alt || site.name}
+          width={site.logo.width}
+          height={site.logo.height}
+        />
+      ) : (
+        <span>{site.name}</span>
+      )}
+      <span class="visually-hidden"> home</span>
+    </a>
+  ) : (
+    <span class="wordmark">
+      {site.logo.src ? (
+        <img
+          src={site.logo.src}
+          alt=""
+          width={site.logo.width}
+          height={site.logo.height}
+        />
+      ) : (
+        <span>{site.name}</span>
+      )}
+    </span>
+  )
+}

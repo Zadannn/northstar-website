@@ -1,22 +1,21 @@
 ---
 import PageHero from "../components/PageHero.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { site } from "../config/site";
+import { projectTypes, site } from "../config/site";
 
-// The form only turns on once a form service address is set in src/config/site.ts.
 const formLive = Boolean(site.formEndpoint);
 ---
 
 <BaseLayout
   title="Contact"
-  description="Call, email, or send a message to Northstar. Tell us what you do and which towns you serve."
+  description={`Send an enquiry to ${site.name}. Phone and email on this page are placeholders until real details are added.`}
 >
   <PageHero
-    kicker="Contact"
-    title="Tell us what you want to fix."
+    eyebrow="Contact"
+    title="Tell us what you want to improve."
     lede={formLive
-      ? "Send a message or call. Tell us what you do, which towns you serve, and whether you want a website, care for an existing site, or help with follow-up."
-      : "The form on this page is switched off. It does not send anything, and there is no inbox behind it. Call or email, and include what you do, the towns you serve, and whether you want a website, care for an existing site, or help with follow-up."}
+      ? "Use the form, or call or email. A short note about the business and the problem is enough to start."
+      : "The form is switched off until a form address is added in the site configuration. It does not send messages. Use the phone or email below. Both are still placeholders."}
   />
 
   <section class="section">
@@ -31,74 +30,141 @@ const formLive = Boolean(site.formEndpoint);
           {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
           <a class="contact-value" href={`mailto:${site.email}`}>{site.email}</a>
         </p>
-        <p>We work with local-service businesses in {site.location}.</p>
+        <p>Say whether you are asking about a website, a CRM, automation, or you are not sure yet.</p>
       </div>
 
       <form
         class="contact-form"
-        aria-describedby="form-status"
+        id="enquiry-form"
+        method="post"
         action={formLive ? site.formEndpoint : undefined}
-        method={formLive ? "post" : undefined}
+        novalidate={formLive}
+        data-live={formLive ? "true" : "false"}
+        aria-describedby="form-status"
       >
-        <p id="form-status" class="form-status">
+        <p id="form-status" class="form-status" role="status" aria-live="polite">
           {
             formLive
-              ? "We use what you send only to reply to your enquiry. Please do not include passwords or payment details."
+              ? "We use what you send only to reply to this enquiry. Do not include passwords or payment details."
               : "This form is turned off. It does not send messages. Use the phone number or email instead."
           }
         </p>
         <fieldset disabled={!formLive}>
-          <legend>Send a message</legend>
+          <legend>Project enquiry</legend>
           <div class="fields">
             <div class="fields-split">
               <div>
                 <label for="name">Your name</label>
                 <input id="name" name="name" type="text" autocomplete="name" required />
+                <p class="field-error" id="name-error"></p>
               </div>
               <div>
                 <label for="email">Email</label>
                 <input id="email" name="email" type="email" autocomplete="email" required />
+                <p class="field-error" id="email-error"></p>
               </div>
             </div>
             <div class="fields-split">
               <div>
-                <label for="phone">Phone</label>
+                <label for="phone">Phone <span class="visually-hidden">(optional)</span></label>
                 <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
               </div>
               <div>
-                <label for="business">Business name</label>
+                <label for="business">Business name <span class="visually-hidden">(optional)</span></label>
                 <input id="business" name="business" type="text" autocomplete="organization" />
               </div>
             </div>
-            <div class="fields-split">
-              <div>
-                <label for="area">Town or area you serve</label>
-                <input id="area" name="area" type="text" />
-              </div>
-              <div>
-                <label for="need">What do you need?</label>
-                <select id="need" name="need">
-                  <option value="">Select one</option>
-                  <option>Website launch</option>
-                  <option>Website care for an existing site</option>
-                  <option>Lead follow-up setup</option>
-                  <option>Not sure yet</option>
-                </select>
-              </div>
+            <div>
+              <label for="project-type">Project type</label>
+              <select id="project-type" name="project-type" required>
+                <option value="">Select one</option>
+                {projectTypes.map((type) => <option value={type}>{type}</option>)}
+              </select>
+              <p class="field-error" id="project-type-error"></p>
             </div>
             <div>
               <label for="message">Message</label>
               <textarea id="message" name="message" required></textarea>
+              <p class="field-error" id="message-error"></p>
             </div>
-            <!-- Spam trap: people never see this field, so a filled value means a bot. -->
             <div class="hp" aria-hidden="true">
-              <label for="website-url">Leave this empty</label>
-              <input id="website-url" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+              <label for="company-website">Leave this empty</label>
+              <input id="company-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
             </div>
-            <button type="submit" disabled={!formLive}>Send message</button>
+            <button class="button" type="submit" disabled={!formLive}>Send message</button>
           </div>
         </fieldset>
       </form>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  const form = document.querySelector("#enquiry-form");
+  if (form instanceof HTMLFormElement && form.dataset.live === "true") {
+    const status = document.querySelector("#form-status");
+    const setStatus = (state: string, text: string) => {
+      if (!(status instanceof HTMLElement)) return;
+      status.dataset.state = state;
+      status.textContent = text;
+    };
+    const fields = [
+      { id: "name", message: "Enter your name." },
+      { id: "email", message: "Enter a valid email address." },
+      { id: "project-type", message: "Select a project type." },
+      { id: "message", message: "Tell us a little about what you want to improve." },
+    ];
+
+    const setError = (id: string, message: string) => {
+      const input = document.getElementById(id);
+      const error = document.getElementById(`${id}-error`);
+      if (input instanceof HTMLElement) {
+        input.setAttribute("aria-invalid", message ? "true" : "false");
+        if (message) input.setAttribute("aria-describedby", `${id}-error`);
+      }
+      if (error) error.textContent = message;
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      let valid = true;
+      for (const field of fields) {
+        const input = document.getElementById(field.id);
+        const value = input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement || input instanceof HTMLSelectElement
+          ? input.value.trim()
+          : "";
+        const emailBad = field.id === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        const message = !value || emailBad ? field.message : "";
+        setError(field.id, message);
+        if (message) valid = false;
+      }
+      if (!valid) {
+        setStatus("error", "Check the highlighted fields, then send the message again.");
+        return;
+      }
+
+      const trap = form.querySelector<HTMLInputElement>("[name='_gotcha']");
+      if (trap && trap.value) {
+        setStatus("success", "Message sent. We will reply using the details you gave.");
+        return;
+      }
+
+      const button = form.querySelector("button[type='submit']");
+      if (button instanceof HTMLButtonElement) button.disabled = true;
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) throw new Error("Request failed");
+        form.reset();
+        setStatus("success", "Message sent. We will reply using the details you gave.");
+      } catch {
+        setStatus("error", "The message could not be sent. Please try again, or use the phone or email on this page.");
+      } finally {
+        if (button instanceof HTMLButtonElement) button.disabled = false;
+      }
+    });
+  }
+</script>

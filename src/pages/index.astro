@@ -1,50 +1,60 @@
 ---
 import Cta from "../components/Cta.astro";
-import Photo from "../components/Photo.astro";
-import Price from "../components/Price.astro";
+import Faq from "../components/Faq.astro";
+import HeroVisual from "../components/HeroVisual.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { services, site, steps, trades } from "../config/site";
+import { audiences, flow, principles, problems, services, site, steps } from "../config/site";
 ---
 
-<BaseLayout
-  title="Clear websites and lead follow-up for New Jersey service businesses"
-  description={site.description}
->
-  <header class="page-hero">
+<BaseLayout title="Digital solutions for modern businesses" description={site.description}>
+  <header class="hero">
     <div class="wrap hero-grid">
       <div>
-        <p class="kicker">{site.name} · Serving {site.location}</p>
-        <h1>Clear, mobile-friendly websites for New Jersey home-service businesses.</h1>
+        <p class="eyebrow">Digital solutions for modern businesses</p>
+        <h1>Better digital experiences. Smarter business operations.</h1>
         <p class="lede">
-          {site.name} is a small US–India team. We build simple websites for cleaners, landscapers, plumbers, and HVAC
-          companies, so customers can see what you do and call or ask for a quote. We can also set up the follow-up, so
-          enquiries do not go cold.
+          We design professional websites, develop practical CRM solutions and automate business processes to help
+          businesses work smarter, serve customers better and move forward with confidence.
         </p>
         <div class="button-row">
-          <a class="button" href="/services">See the services</a>
-          <a class="button button-secondary" href="/contact">Contact</a>
+          <a class="button" href={site.cta.href}>{site.cta.label}</a>
+          <a class="button button-secondary" href="/services">Explore Our Services</a>
         </div>
       </div>
-      <Photo {...site.photos.hero} priority />
+      <HeroVisual />
     </div>
   </header>
 
-  <section class="section" aria-labelledby="services-heading">
+  <section class="section" aria-labelledby="intro-heading">
+    <div class="wrap prose">
+      <h2 id="intro-heading">Your business deserves technology that works for you.</h2>
+      <p>
+        Your website, customer information and everyday processes should work together. We bring design, development
+        and practical automation together to create digital solutions that make running your business simpler.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-tight" aria-labelledby="pillars-heading">
     <div class="wrap">
       <div class="section-head">
-        <h2 id="services-heading">What we offer</h2>
-        <p>Most clients start with a website. Prices on this draft are placeholders.</p>
+        <h2 id="pillars-heading">Everything your business needs to work smarter.</h2>
+        <p>From your online presence to your internal workflows, we help bring the right digital solutions together.</p>
       </div>
-      <div class="card-grid">
+      <div class="pillar-grid">
         {
-          services.map((service, index) => (
+          services.map((service) => (
             <article class="card">
-              <p class="index-num">{String(index + 1).padStart(2, "0")}</p>
-              <h3>
-                <a href={`/services/${service.slug}`}>{service.title}</a>
-              </h3>
+              <h3>{service.title}</h3>
               <p>{service.summary}</p>
-              <Price amount={site.prices[service.priceKey]} />
+              <ul>
+                {service.points.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+              <a class="button button-secondary" href={service.href}>
+                {service.cta}
+              </a>
             </article>
           ))
         }
@@ -52,42 +62,111 @@ import { services, site, steps, trades } from "../config/site";
     </div>
   </section>
 
-  <section class="section" aria-labelledby="who-heading">
+  <section class="section" aria-labelledby="problems-heading">
     <div class="wrap">
       <div class="section-head">
-        <h2 id="who-heading">Who it is for</h2>
+        <h2 id="problems-heading">Small inefficiencies can become big problems.</h2>
+      </div>
+      <div class="problem-grid">
+        {
+          problems.map((problem) => (
+            <article class="card">
+              <h3>{problem.title}</h3>
+              <p>{problem.text}</p>
+            </article>
+          ))
+        }
+      </div>
+      <div class="help-panel">
+        <h3>How we help</h3>
         <p>
-          Owner-run service businesses where customers call or ask for a quote. We are starting with four trades so we
-          can do them well.
+          We start from the work you already do. We look at how people find you, how an enquiry is recorded, and which
+          steps are repeated by hand. Then we propose a practical scope: a website, a CRM setup, an automation, or a
+          combination. What is included, and what is not, is written down before anything is built.
         </p>
       </div>
-      <ul class="pills">
-        {trades.map((trade) => <li>{trade}</li>)}
-      </ul>
+    </div>
+  </section>
+
+  <section class="section band-dark" aria-labelledby="flow-heading">
+    <div class="wrap">
+      <h2 id="flow-heading">Better systems. Less manual work.</h2>
+      <p class="section-intro">
+        One enquiry, followed through. This is the path we set up when a website, a CRM, and a follow-up need to work
+        as one sequence.
+      </p>
+      <ol class="flow-list">
+        {
+          flow.map((step, index) => (
+            <li>
+              <span class="flow-num">{String(index + 1).padStart(2, "0")}</span>
+              <strong>{step.title}</strong>
+              <p>{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="note">No new software product is required to explain it. A message comes in, it is saved, someone is told, and a follow-up happens.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="audience-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="audience-heading">Built around the way your business works.</h2>
+        <p class="examples-label">Examples, not a limit. The work is not tied to one trade or one place.</p>
+      </div>
+      <div class="audience-grid">
+        {
+          audiences.map((item) => (
+            <article>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))
+        }
+      </div>
     </div>
   </section>
 
   <section class="section" aria-labelledby="process-heading">
     <div class="wrap">
       <div class="section-head">
-        <h2 id="process-heading">How it works</h2>
-        <p>Four steps, with a written scope and price before any work starts.</p>
+        <h2 id="process-heading">A straightforward process, from idea to implementation.</h2>
       </div>
-      <ol class="steps">
+      <div class="process-grid">
         {
           steps.map((step) => (
-            <li class="step">
+            <article>
+              <span class="process-num">{step.number}</span>
               <h3>{step.title}</h3>
-              <p>{step.summary}</p>
-            </li>
+              <p>{step.text}</p>
+            </article>
           ))
         }
-      </ol>
-      <div class="button-row">
-        <a class="button button-secondary" href="/how-it-works">Read the full process</a>
+      </div>
+      <p><a href="/how-it-works">Read how a project runs</a></p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="principles-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="principles-heading">Technology should make business easier, not more complicated.</h2>
+      </div>
+      <div class="principle-grid">
+        {
+          principles.map((item) => (
+            <article>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
 
+  <Faq />
   <Cta />
 </BaseLayout>
