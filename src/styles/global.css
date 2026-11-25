@@ -183,6 +183,31 @@ main:focus {
   gap: 1rem;
 }
 
+@media (max-width: 1023px) {
+  .header-shell {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 1rem;
+  }
+
+  .logo {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* Let the toggle and the open panel sit on the header grid so the panel pushes the page down. */
+  .menu {
+    display: contents;
+  }
+
+  .nav-toggle {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+}
+
 .logo {
   display: inline-flex;
   align-items: center;
@@ -273,15 +298,14 @@ a.header-cta {
 }
 
 .menu[open] > .menu-panel {
-  position: absolute;
-  z-index: 20;
-  left: 0;
-  right: 0;
-  top: 100%;
-  padding: 0.35rem 0 0.85rem;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  position: static;
+  width: 100%;
+  margin-top: 0.15rem;
+  padding: 0.35rem 0 0.9rem;
   background: var(--color-bg);
-  border-bottom: 1px solid var(--color-line);
-  box-shadow: var(--shadow-md);
+  border-top: 1px solid var(--color-line);
 }
 
 .menu .nav-list a[aria-current="page"] {

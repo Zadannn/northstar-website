@@ -22,7 +22,7 @@ src/layouts/          Shared frame: draft banner, metadata, header, and footer
 src/components/       Header, footer, wordmark, hero visual, page hero, service cards, CTA, FAQ, and the contact details
 src/styles/           fonts.css and global.css. Colours, type, and spacing are CSS variables.
 src/config/site.ts    Name, logo, phone, email, draft switches, services, process, FAQ, and the form address
-public/               Favicon. public/images holds unused stand-in pictures.
+public/               Favicon, stand-in pictures, and public/_redirects for older URLs.
 dist/                 The built site. Not saved in git.
 .github/workflows/    A check that the site builds on Node.js 20. It does not publish the site.
 ```
@@ -114,3 +114,5 @@ Do these only when you mean to publish. This repository does not do them for you
 This project is not deployed. Nothing in this repository publishes the site, changes DNS, or changes hosting settings.
 
 A later host can build with `npm run build` and serve the `dist` folder. Leave `draft` set to `true` until the checklist above is done.
+
+`public/_redirects` sends older addresses to the current service pages with a 301. That includes `/web-development`, `/crm-automation`, and the earlier service paths. The live pages are `/services/web-development`, `/services/crm-solutions`, and `/services/business-automation`. The local preview server does not apply that file. A host that understands it, such as Cloudflare Pages, does.
