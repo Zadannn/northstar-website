@@ -46,7 +46,7 @@ const year = new Date().getFullYear();
   <div class="wrap legal-row">
     <p>
       © {year} {site.name}.
-      {site.draft && " Draft website. Not published."}
+      {site.draft && ` ${site.draftNotice}`}
     </p>
     {
       legalNav.map((item) => (

@@ -3,7 +3,7 @@ import Cta from "../../components/Cta.astro";
 import PageHero from "../../components/PageHero.astro";
 import ServiceCard from "../../components/ServiceCard.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { notes, services } from "../../config/site";
+import { notes, paths, services } from "../../config/site";
 ---
 
 <BaseLayout
@@ -23,7 +23,7 @@ import { notes, services } from "../../config/site";
       </div>
       <p class="note">{notes.workflow}</p>
       <div class="button-row">
-        <a class="button button-secondary" href="/how-it-works">See how a project runs</a>
+        <a class="button button-secondary" href={paths.howItWorks}>See how a project runs</a>
       </div>
     </div>
   </section>

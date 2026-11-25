@@ -79,9 +79,9 @@ Colours and the type stack live in `src/styles/global.css` as custom properties 
 
 ### The contact form
 
-The form on the Contact page is **turned off** until `formEndpoint` in `src/config/site.ts` has an address. While it is empty the fields are disabled, the button cannot be used, and the page says the form does not send. It does not show a success message.
+The form on the Contact page is **not rendered** until `formEndpoint` in `src/config/site.ts` is a valid `http` or `https` address. While it is empty, the page shows a notice that the enquiry form is being prepared, next to the phone number and email. Those stay marked Placeholder while `placeholders.contact` is true. The page does not show a success message.
 
-To turn it on, create a form with a form service (for example [Formspree](https://formspree.io)), paste the form's address into `formEndpoint`, and rebuild. The form then posts to that address, and includes a hidden spam-trap field named `_gotcha`. Test it by sending yourself a message before launch. Other form services may use a different spam-trap field name.
+To turn the form on, create a form with a form service (for example [Formspree](https://formspree.io)), paste the form's address into `formEndpoint`, and rebuild. The form then shows labelled fields, checks the required name, email, project type, and message in the browser, posts to that address, and includes a hidden spam-trap field named `_gotcha`. A success message appears only after that service accepts the message. Test it by sending yourself a message before launch. Other form services may use a different spam-trap field name.
 
 ### Draft safeguards
 
@@ -115,4 +115,4 @@ This project is not deployed. Nothing in this repository publishes the site, cha
 
 A later host can build with `npm run build` and serve the `dist` folder. Leave `draft` set to `true` until the checklist above is done.
 
-`public/_redirects` sends older addresses to the current service pages with a 301. That includes `/web-development`, `/crm-automation`, and the earlier service paths. The live pages are `/services/web-development`, `/services/crm-solutions`, and `/services/business-automation`. The local preview server does not apply that file. A host that understands it, such as Cloudflare Pages, does.
+`public/_redirects` sends older addresses to the current service pages with a 301, and sends each canonical page without a trailing slash to the same page with one. The live pages are `/services/web-development/`, `/services/crm-solutions/`, and `/services/business-automation/`. Internal links use that trailing slash. `astro.config.ts` sets `trailingSlash` to `always` and `build.format` to `directory`. The local preview server does not apply `_redirects`. A host that understands it, such as Cloudflare Pages, does. Astro's own preview does redirect a missing slash to the trailing-slash URL.

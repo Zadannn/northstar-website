@@ -1,9 +1,9 @@
 ---
 import PageHero from "../components/PageHero.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { legalNav, notes, site } from "../config/site";
+import { formAction, legalNav, notes, site } from "../config/site";
 
-const formLive = Boolean(site.formEndpoint);
+const formLive = formAction() !== null;
 ---
 
 <BaseLayout
@@ -34,8 +34,8 @@ const formLive = Boolean(site.formEndpoint);
           </p>
         ) : (
           <p>
-            The contact form is switched off. It does not send a message, it is not stored, and it does not show a
-            success confirmation. There is no form inbox behind it.
+            The enquiry form is not published while it is being prepared. This draft does not send, store, or confirm a
+            message. There is no form inbox behind it.
           </p>
         )
       }

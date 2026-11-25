@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { legalNav, nav, publishesAbsoluteUrls, serviceHref, services, site } from "../config/site";
+import { absoluteUrl, legalNav, nav, publishesAbsoluteUrls, serviceHref, services } from "../config/site";
 
 /**
  * Built from the navigation, service list, and legal links. While the site is a
@@ -13,7 +13,7 @@ export const GET: APIRoute = () => {
     ...legalNav.map((item) => item.href),
   ];
   const urls = publishesAbsoluteUrls()
-    ? [...new Set(paths)].map((path) => `  <url><loc>${new URL(path, site.siteUrl).href}</loc></url>`)
+    ? [...new Set(paths)].map((path) => `  <url><loc>${absoluteUrl(path)}</loc></url>`)
     : [];
 
   const body = [

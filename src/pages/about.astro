@@ -3,9 +3,10 @@ import Cta from "../components/Cta.astro";
 import PageHero from "../components/PageHero.astro";
 import Photo from "../components/Photo.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { notes, positioning, serviceHref, services, site } from "../config/site";
+import { founders, notes, paths, positioning, serviceHref, services, site } from "../config/site";
 
 const showPhoto = !site.placeholders.photos;
+const [coordination, delivery] = founders;
 ---
 
 <BaseLayout title="About" description={positioning.summary}>
@@ -24,11 +25,23 @@ const showPhoto = !site.placeholders.photos;
           We are a small team, not a large firm with a separate sales desk. You deal with the people doing the work. If
           a request sits outside website development, CRM configuration, or practical automation, we will say so.
         </p>
-        <h2>What we will not invent</h2>
         <p>
-          There are no customer logos, testimonials, or case studies on this site, because we will not publish proof we
-          cannot stand behind. {notes.scope}
+          We keep the work in a few hands on purpose. The people you talk to are the same people who plan and build
+          what you asked for, so nothing gets lost in a handoff.
         </p>
+        <p>{notes.scope}</p>
+
+        <section aria-labelledby="founders-heading">
+          <h2 id="founders-heading">Two founders, two roles</h2>
+          <p>
+            {`${site.name} is run by its two founders. ${coordination.name} handles ${coordination.role}: ${coordination.responsibilities}. ${delivery.name} handles ${delivery.role}: ${delivery.responsibilities}.`}
+          </p>
+          <p>
+            The two roles fit together. One of us stays close to your day-to-day needs while the other stays close to
+            the build, so you get clear answers without a chain of account managers in between.
+          </p>
+        </section>
+
         <h2>The work itself</h2>
         <ul class="checklist">
           {
@@ -40,7 +53,7 @@ const showPhoto = !site.placeholders.photos;
           }
         </ul>
         <p class="note">
-          <a href="/how-it-works">See how a project runs</a>. Until launch, treat the phone number and email address as
+          <a href={paths.howItWorks}>See how a project runs</a>. Until launch, treat the phone number and email address as
           stand-ins.
         </p>
       </div>

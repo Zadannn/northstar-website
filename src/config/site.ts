@@ -16,6 +16,17 @@ const name = "Northstar";
 
 const placeholderHosts = new Set(["example.com", "www.example.com"]);
 
+/** Public routes. Internal links use a trailing slash. Home stays `/`. */
+export const paths = {
+  home: "/",
+  services: "/services/",
+  howItWorks: "/how-it-works/",
+  about: "/about/",
+  contact: "/contact/",
+  privacy: "/privacy/",
+  terms: "/terms/",
+} as const;
+
 export const site = {
   /** Placeholder business name. Every public mention should read this value. */
   name,
@@ -31,6 +42,8 @@ export const site = {
   email: "hello@example.com",
   /** Keep true until the site is ready to be found in search. */
   draft: true,
+  /** Sentence appended in the shared footer while `draft` is true. */
+  draftNotice: "Draft website. Not published.",
   /**
    * Public price display. Keep false until founders agree final prices.
    * Internal draft figures below are never rendered while this is false.
@@ -48,7 +61,8 @@ export const site = {
   },
   /**
    * Address of a form service (for example a Formspree form URL). While this
-   * is empty the contact form stays switched off. It does not pretend to send.
+   * is empty, or not a valid http(s) URL, the contact page does not render a
+   * form and does not show a success message.
    */
   formEndpoint: "",
   /**
@@ -63,11 +77,11 @@ export const site = {
   /** Primary action used in the header, hero, and closing banner. */
   cta: {
     label: "Let's Talk About Your Project",
-    href: "/contact",
+    href: paths.contact,
   },
   secondaryCta: {
     label: "Explore Our Services",
-    href: "/services",
+    href: paths.services,
   },
   /**
    * Optional service area for a future live site. Empty means the practice is
@@ -117,6 +131,46 @@ export function publishesAbsoluteUrls(): boolean {
   }
 }
 
+/**
+ * Normalise an internal path to the site's trailing-slash convention.
+ * Home stays `/`. Files such as `/sitemap.xml` are left unchanged.
+ */
+export function pagePath(path: string): string {
+  const cut = Math.min(
+    ...["#", "?"].map((mark) => {
+      const index = path.indexOf(mark);
+      return index === -1 ? path.length : index;
+    }),
+  );
+  const pathname = path.slice(0, cut);
+  const suffix = path.slice(cut);
+  if (pathname === "/" || pathname.endsWith("/") || /\.[a-z0-9]+$/i.test(pathname)) {
+    return `${pathname}${suffix}`;
+  }
+  return `${pathname}/${suffix}`;
+}
+
+/** Absolute URL for a path, using the trailing-slash convention. */
+export function absoluteUrl(pathname: string): string {
+  return new URL(pagePath(pathname), site.siteUrl).href;
+}
+
+/**
+ * The contact form is rendered only when `formEndpoint` is an http(s) URL.
+ * An empty or invalid value must not produce a form or a success message.
+ */
+export function formAction(): string | null {
+  const value = site.formEndpoint.trim();
+  if (!value) return null;
+  try {
+    const url = new URL(value);
+    if (url.protocol !== "http:" && url.protocol !== "https:") return null;
+    return url.href;
+  } catch {
+    return null;
+  }
+}
+
 export const positioning = {
   summary: `${site.name} is a digital solutions practice for small businesses and growing companies. The work has three equal parts: website development, CRM setup, and practical automation.`,
   detail:
@@ -132,21 +186,41 @@ export const notes = {
     "These are examples of businesses we can help, not a limit on who we work with.",
   legal:
     "This is placeholder text for a draft website. It has not been reviewed by a lawyer and it does not guarantee legal compliance.",
-  formOff:
-    "This form is turned off. It does not send messages, and submitting it will not show a success message.",
+  formPending:
+    "It is not on this page yet. Please use the phone number or email. Both are marked Placeholder. This page does not send a message or show a success confirmation.",
 } as const;
 
 export const nav = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/how-it-works", label: "How it works" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: paths.home, label: "Home" },
+  { href: paths.services, label: "Services" },
+  { href: paths.howItWorks, label: "How it works" },
+  { href: paths.about, label: "About" },
+  { href: paths.contact, label: "Contact" },
 ] as const;
 
 export const legalNav = [
-  { href: "/privacy", label: "Privacy" },
-  { href: "/terms", label: "Terms" },
+  { href: paths.privacy, label: "Privacy" },
+  { href: paths.terms, label: "Terms" },
+] as const;
+
+/**
+ * About-page operating model. First names and role text only.
+ * Both founders must approve this description before launch.
+ * Do not add biographies, credentials, years, or client history.
+ */
+export const founders = [
+  {
+    name: "Maitri",
+    role: "client coordination",
+    responsibilities:
+      "the first conversation, understanding how your business runs, agreeing the scope in writing and keeping you updated as work moves along",
+  },
+  {
+    name: "Prashant",
+    role: "technical delivery",
+    responsibilities:
+      "building the pages, setting up the CRM, connecting the automation and testing that it all works before handover",
+  },
 ] as const;
 
 export const closing = {
@@ -526,5 +600,5 @@ export function getService(slug: ServiceSlug): Service {
 }
 
 export function serviceHref(slug: ServiceSlug): string {
-  return `/services/${slug}`;
+  return pagePath(`/services/${slug}`);
 }

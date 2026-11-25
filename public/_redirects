@@ -1,16 +1,26 @@
+# Canonical pages use a trailing slash.
 # Older addresses 301 to the current service pages.
-# Canonical pages live at /services/web-development, /services/crm-solutions, and /services/business-automation.
 
-/web-development /services/web-development 301
-/web-development/ /services/web-development 301
-/services/website-launch /services/web-development 301
-/services/website-launch/ /services/web-development 301
-/services/website-care /services/web-development 301
-/services/website-care/ /services/web-development 301
+/services /services/ 301
+/services/web-development /services/web-development/ 301
+/services/crm-solutions /services/crm-solutions/ 301
+/services/business-automation /services/business-automation/ 301
+/how-it-works /how-it-works/ 301
+/about /about/ 301
+/contact /contact/ 301
+/privacy /privacy/ 301
+/terms /terms/ 301
 
-/crm-automation /services/crm-solutions 301
-/crm-automation/ /services/crm-solutions 301
-/services/crm-building /services/crm-solutions 301
-/services/crm-building/ /services/crm-solutions 301
-/services/lead-follow-up /services/business-automation 301
-/services/lead-follow-up/ /services/business-automation 301
+/web-development /services/web-development/ 301
+/web-development/ /services/web-development/ 301
+/services/website-launch /services/web-development/ 301
+/services/website-launch/ /services/web-development/ 301
+/services/website-care /services/web-development/ 301
+/services/website-care/ /services/web-development/ 301
+
+/crm-automation /services/crm-solutions/ 301
+/crm-automation/ /services/crm-solutions/ 301
+/services/crm-building /services/crm-solutions/ 301
+/services/crm-building/ /services/crm-solutions/ 301
+/services/lead-follow-up /services/business-automation/ 301
+/services/lead-follow-up/ /services/business-automation/ 301

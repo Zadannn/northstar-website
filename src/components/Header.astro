@@ -2,11 +2,18 @@
 import Wordmark from "./Wordmark.astro";
 import { nav, site } from "../config/site";
 
-const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+function normalize(pathname: string): string {
+  const path = pathname.split("#")[0].split("?")[0];
+  if (path === "/") return "/";
+  return path.replace(/\/$/, "");
+}
+
+const path = normalize(Astro.url.pathname);
 
 function isCurrent(href: string): boolean {
-  if (href === "/") return path === "/";
-  return path === href || path.startsWith(`${href}/`);
+  const target = normalize(href);
+  if (target === "/") return path === "/";
+  return path === target || path.startsWith(`${target}/`);
 }
 ---
 
@@ -55,3 +62,16 @@ function isCurrent(href: string): boolean {
     </details>
   </div>
 </header>
+
+<script>
+  const menu = document.querySelector(".site-header .menu");
+  if (menu instanceof HTMLDetailsElement) {
+    const summary = menu.querySelector("summary");
+    menu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.open) {
+        menu.open = false;
+        if (summary instanceof HTMLElement) summary.focus();
+      }
+    });
+  }
+</script>
