@@ -1,0 +1,50 @@
+---
+import { projects } from "../config/site";
+
+interface Props {
+  headingLevel?: "h2" | "h3";
+}
+
+const { headingLevel = "h2" } = Astro.props;
+const Heading = headingLevel;
+---
+
+<div class="project-list">
+  {
+    projects.map((project) => (
+      <article class="project" id={project.id}>
+        <p class="index-label">{project.relationship}</p>
+        <Heading>{project.name}</Heading>
+        <p>{project.summary}</p>
+        <p class="note">{project.note}</p>
+        <p class="project-link">
+          <a href={project.url} target="_blank" rel="noopener noreferrer">
+            Visit the live {project.name} site
+            <span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+        </p>
+        <div class="shot-pair">
+          {project.screenshots.map((shot) => (
+            <figure class="shot">
+              {shot.src ? (
+                <img
+                  src={shot.src}
+                  width={shot.width}
+                  height={shot.height}
+                  alt={shot.alt}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div class="shot-fallback">
+                  <p>Project preview</p>
+                </div>
+              )}
+              <figcaption>{shot.src ? shot.caption : "Project preview"}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </article>
+    ))
+  }
+</div>

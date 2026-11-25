@@ -1,19 +1,19 @@
 import type { APIRoute } from "astro";
-import { absoluteUrl, legalNav, nav, publishesAbsoluteUrls, serviceHref, services } from "../config/site";
+import { absoluteUrl, legalNav, nav, paths, publishesAbsoluteUrls } from "../config/site";
 
 /**
- * Built from the navigation, service list, and legal links. While the site is a
+ * Built from the navigation, the website service page, and legal links. While the site is a
  * draft, or the public address is still the example.com placeholder, the
  * sitemap is left empty so that address is not advertised.
  */
 export const GET: APIRoute = () => {
-  const paths = [
+  const entries = [
     ...nav.map((item) => item.href),
-    ...services.map((service) => serviceHref(service.slug)),
+    paths.webDevelopment,
     ...legalNav.map((item) => item.href),
   ];
   const urls = publishesAbsoluteUrls()
-    ? [...new Set(paths)].map((path) => `  <url><loc>${absoluteUrl(path)}</loc></url>`)
+    ? [...new Set(entries)].map((path) => `  <url><loc>${absoluteUrl(path)}</loc></url>`)
     : [];
 
   const body = [

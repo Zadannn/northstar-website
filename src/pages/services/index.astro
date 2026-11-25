@@ -8,21 +8,22 @@ import { notes, paths, services } from "../../config/site";
 
 <BaseLayout
   title="Services"
-  description="Website development, CRM setup, and practical business automation. Each service stands on its own."
+  description="Business websites, landing pages, redesigns, responsive optimisation, basic technical SEO, and deployment with a documented handover."
 >
   <PageHero
     kicker="Services"
-    title="Three services, with the same care in each."
-    lede="Website development, CRM solutions, and business automation. They are equal parts of the practice. Start with one, or combine them when the work calls for it."
+    title="Website services, with the limits written down."
+    lede="Six services for a business website. Start with one, or combine them when the work calls for it. Custom software is not part of this list."
   />
 
-  <section class="section" aria-label="Service comparison">
+  <section class="section" aria-label="Website services">
     <div class="wrap">
       <div class="card-grid">
-        {services.map((service) => <ServiceCard service={service} level="h2" detailed />)}
+        {services.map((service, index) => <ServiceCard service={service} index={index} level="h2" />)}
       </div>
-      <p class="note">{notes.workflow}</p>
+      <p class="note">{notes.maintenance}</p>
       <div class="button-row">
+        <a class="button button-secondary" href={paths.webDevelopment}>Read the website scope</a>
         <a class="button button-secondary" href={paths.howItWorks}>See how a project runs</a>
       </div>
     </div>
@@ -30,6 +31,6 @@ import { notes, paths, services } from "../../config/site";
 
   <Cta
     heading="Not sure which service fits?"
-    text="Describe the business and what is getting in the way. We will tell you if we can help, and we will say so if we cannot."
+    text="Describe the business and what the website needs to do. We will tell you if we can help, and we will say so if we cannot."
   />
 </BaseLayout>
