@@ -1,0 +1,137 @@
+---
+import PlaceholderShot from "./PlaceholderShot.astro";
+import QuoteForm from "./QuoteForm.astro";
+import SampleLayout from "../layouts/SampleLayout.astro";
+import { quotePath, type SampleSite } from "../config/sites";
+
+interface Props {
+  site: SampleSite;
+}
+
+const { site } = Astro.props;
+const gallerySlots = [0, 1, 2, 3];
+---
+
+<SampleLayout site={site} title={site.homeTitle} description={site.homeDescription}>
+  <header class="page-hero home-hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">{site.eyebrow}</p>
+        <h1>{site.heroTitle}</h1>
+        <p class="lede">{site.lede}</p>
+        <div class="button-row">
+          <a class="button" href={quotePath(site)}>Request a free quote</a>
+          <a class="button button-secondary" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+        </div>
+      </div>
+      <PlaceholderShot />
+    </div>
+  </header>
+
+  <section class="section" id="services" aria-labelledby="services-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Services</p>
+        <h2 id="services-heading">Services</h2>
+        {site.servicesNote && <p class="note">{site.servicesNote}</p>}
+      </div>
+      <div class="card-grid">
+        {
+          site.services.map((service, index) => (
+            <article class="card service-card" id={service.slug}>
+              <p class="index-label">{String(index + 1).padStart(2, "0")}</p>
+              <h3>{service.title}</h3>
+              <p>{service.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section band" id="gallery" aria-labelledby="gallery-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Gallery</p>
+        <h2 id="gallery-heading">Gallery</h2>
+        <p>Project photo placeholder. These are not photographs of finished work.</p>
+      </div>
+      <ul class="gallery-grid">
+        {
+          gallerySlots.map(() => (
+            <li>
+              <PlaceholderShot />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="areas" aria-labelledby="areas-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Service area</p>
+        <h2 id="areas-heading">Service area</h2>
+        <p>{site.areaNote}</p>
+      </div>
+      <ul class="type-grid">
+        {
+          site.areas.map((area) => (
+            <li>
+              <h3>{area.title}</h3>
+              <p>{area.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="reviews" aria-labelledby="reviews-heading">
+    <div class="wrap">
+      {
+        site.reviews.kind === "rating" ? (
+          <div class="section-head">
+            <p class="eyebrow">Reviews</p>
+            <h2 id="reviews-heading">
+              <a href={site.reviews.href} target="_blank" rel="noopener noreferrer">
+                {site.reviews.line}
+                <span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </h2>
+          </div>
+        ) : (
+          <>
+            <div class="section-head">
+              <p class="eyebrow">Reviews</p>
+              <h2 id="reviews-heading">Sample reviews</h2>
+            </div>
+            <div class="card-grid">
+              {site.reviews.items.map((item) => (
+                <article class="card">
+                  <p>
+                    <span class="placeholder-tag">Sample</span>
+                  </p>
+                  <h3>Sample review</h3>
+                  <p>{item}</p>
+                </article>
+              ))}
+            </div>
+          </>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="section" id="quote" aria-labelledby="quote-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Quote</p>
+        <h2 id="quote-heading">Request a free quote</h2>
+        <p>{site.quoteLede}</p>
+      </div>
+      <QuoteForm site={site} />
+    </div>
+  </section>
+</SampleLayout>

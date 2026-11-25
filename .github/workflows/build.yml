@@ -27,3 +27,27 @@ jobs:
 
       - name: Build the site
         run: npm run build
+
+  samples:
+    runs-on: ubuntu-latest
+    env:
+      ASTRO_TELEMETRY_DISABLED: "1"
+    defaults:
+      run:
+        working-directory: samples
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: samples/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the samples
+        run: npm run build

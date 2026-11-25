@@ -1,0 +1,22 @@
+---
+import { quotePath, type SampleSite } from "../config/sites";
+
+interface Props {
+  site: SampleSite;
+}
+
+const { site } = Astro.props;
+
+function normalize(pathname: string): string {
+  const path = pathname.split("#")[0].split("?")[0];
+  if (path === "/") return "/";
+  return path.endsWith("/") ? path : `${path}/`;
+}
+
+const quoteHref = normalize(Astro.url.pathname) === quotePath(site) ? "#quote-form" : quotePath(site);
+---
+
+<div class="call-bar">
+  <a class="button" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+  <a class="button button-secondary" href={quoteHref}>Request a free quote</a>
+</div>

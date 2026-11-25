@@ -1,0 +1,66 @@
+---
+import Wordmark from "./Wordmark.astro";
+import { quotePath, siteNav, type SampleSite } from "../config/sites";
+
+interface Props {
+  site: SampleSite;
+}
+
+const { site } = Astro.props;
+const year = new Date().getFullYear();
+const nav = siteNav(site);
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href={site.base} aria-label={`${site.name}, home`}>
+        <Wordmark name={site.name} />
+      </a>
+      <p>{site.locationLine}</p>
+    </div>
+    <nav aria-label="Services">
+      <p class="footer-heading">Services</p>
+      <ul class="footer-nav">
+        {
+          site.services.map((service) => (
+            <li>
+              <a href={`${site.base}#${service.slug}`}>{service.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <nav aria-label="Pages">
+      <p class="footer-heading">Explore</p>
+      <ul class="footer-nav">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div>
+      <p class="footer-heading">Contact</p>
+      <p class="contact-line">
+        <a href={site.phoneHref}>{site.phoneDisplay}</a>
+      </p>
+      {
+        site.email && (
+          <p class="contact-line">
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+          </p>
+        )
+      }
+      {site.hoursUnderHeading && <p class="footer-heading">Hours</p>}
+      <p>{site.hours}</p>
+    </div>
+  </div>
+  <div class="wrap legal-row">
+    <p>© {year} {site.name.replace(/\.$/, "")}. {site.banner}</p>
+    <a href={quotePath(site)}>Request a free quote</a>
+  </div>
+</footer>
