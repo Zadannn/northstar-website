@@ -280,6 +280,10 @@ a.header-cta {
   border-top: 1px solid var(--color-line);
 }
 
+.menu:not([open]) > .menu-panel {
+  display: none;
+}
+
 .menu .nav-list a[aria-current="page"] {
   box-shadow: inset 2px 0 0 var(--color-accent);
   padding-left: 0.75rem;
@@ -986,6 +990,51 @@ a.header-cta {
 .form-status p,
 .notice p {
   margin: 0;
+}
+
+.form-status[data-state="success"] {
+  background: var(--color-accent-soft);
+  color: var(--color-ink);
+}
+
+.form-status[data-state="error"] {
+  background: var(--color-notice-bg);
+  color: var(--color-notice-ink);
+}
+
+.form-pending {
+  margin: 0;
+  padding: 1.2rem 1.2rem 1.3rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-raised);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-pending h2 {
+  margin: 0 0 0.85rem;
+  font-size: 1.35rem;
+}
+
+.form-pending .notice {
+  margin: 0;
+}
+
+.field-error {
+  margin: 0.35rem 0 0;
+  color: #7a341f;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.field-error:empty {
+  display: none;
+}
+
+.fields input[aria-invalid="true"],
+.fields select[aria-invalid="true"],
+.fields textarea[aria-invalid="true"] {
+  border-color: #7a341f;
 }
 
 .contact-form fieldset {

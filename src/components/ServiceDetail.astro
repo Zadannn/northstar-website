@@ -2,7 +2,7 @@
 import Cta from "./Cta.astro";
 import PageHero from "./PageHero.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { notes, serviceHref, services, site, type Service } from "../config/site";
+import { notes, paths, serviceHref, services, site, type Service } from "../config/site";
 
 interface Props {
   service: Service;
@@ -62,7 +62,7 @@ const others = services.filter((item) => item.slug !== service.slug);
     <div class="wrap">
       <div class="section-head">
         <h2 id="other-services-heading">The other services</h2>
-        <p>Each one stands on its own. <a href="/services">Compare all three</a>.</p>
+        <p>Each one stands on its own. <a href={paths.services}>Compare all three</a>.</p>
       </div>
       <div class="section-grid">
         {

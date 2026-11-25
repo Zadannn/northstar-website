@@ -1,7 +1,9 @@
 ---
 import PageHero from "../components/PageHero.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { legalNav, notes, site } from "../config/site";
+import { formAction, legalNav, notes, site } from "../config/site";
+
+const formLive = formAction() !== null;
 ---
 
 <BaseLayout
@@ -26,8 +28,12 @@ import { legalNav, notes, site } from "../config/site";
       <h2 id="terms-heading">Using this website</h2>
       <p>
         {site.name} is a placeholder name on a draft website. Pages can change. The phone number and email address are
-        stand-ins. Nothing on the site is an offer you can accept by using the form, because the form does not send
-        while it is switched off.
+        stand-ins. Nothing on the site is an offer you can accept through a form.
+        {
+          formLive
+            ? " The contact form only sends what you submit to the configured form address. Sending it does not start a project."
+            : " The enquiry form is not available on this draft."
+        }
       </p>
 
       <h2>Services are agreed separately</h2>

@@ -3,7 +3,7 @@ import "../styles/fonts.css";
 import "../styles/global.css";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import { publishesAbsoluteUrls, site } from "../config/site";
+import { absoluteUrl, publishesAbsoluteUrls, site } from "../config/site";
 
 interface Props {
   title: string;
@@ -13,7 +13,7 @@ interface Props {
 const { title, description } = Astro.props;
 const documentTitle = `${title} · ${site.name}`;
 const exposeUrls = publishesAbsoluteUrls();
-const canonical = exposeUrls ? new URL(Astro.url.pathname, site.siteUrl).href : "";
+const canonical = exposeUrls ? absoluteUrl(Astro.url.pathname) : "";
 
 // Structured data is only added once the site is live. No address, reviews, or area are invented.
 const structuredData = site.draft
