@@ -1,47 +1,64 @@
 ---
 import Cta from "../components/Cta.astro";
+import Faq from "../components/Faq.astro";
 import PageHero from "../components/PageHero.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { detailedSteps } from "../config/site";
+import { notes, steps } from "../config/site";
 ---
 
 <BaseLayout
   title="How it works"
-  description="Discovery, planning, development, testing, launch, and support. The scope is written down before the work starts."
+  description="Discovery, planning, development, testing, launch, and support. Scope is agreed before development, with no guaranteed timeline."
 >
   <PageHero
-    eyebrow="How it works"
-    title="From the first conversation to a handover you can run."
-    lede="Every project follows the same shape. The size of each step depends on whether we are building a website, configuring a CRM, automating a workflow, or doing more than one of those."
+    kicker="How it works"
+    title="From the first conversation to a careful handover."
+    lede="Discovery, planning, development, testing, launch, and support. Scope and deliverables are agreed before development. We do not promise a fixed timeline."
   />
 
   <section class="section" aria-labelledby="steps-heading">
     <div class="wrap">
-      <h2 id="steps-heading" class="visually-hidden">Project steps</h2>
-      <div class="process-grid six">
+      <div class="section-head">
+        <h2 id="steps-heading">The six steps</h2>
+        <p>{notes.scope}</p>
+      </div>
+      <ol class="process-grid">
         {
-          detailedSteps.map((step) => (
-            <article class="card">
-              <span class="process-num">{step.number}</span>
+          steps.map((step, index) => (
+            <li>
+              <p class="step-num">{String(index + 1).padStart(2, "0")}</p>
               <h3>{step.title}</h3>
-              <p>{step.text}</p>
-            </article>
+              <p>{step.detail}</p>
+            </li>
           ))
         }
-      </div>
+      </ol>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap prose">
-      <h2>What you will have at the end</h2>
-      <p>
-        The website, CRM setup, or workflow described in the scope. Access that belongs to you. A short note of how
-        ordinary updates are made. Support only as far as that scope goes.
-      </p>
-      <p>There is no public price list. Requirements come first, then a proposal.</p>
+  <section class="section" aria-labelledby="needs-heading">
+    <div class="wrap split">
+      <article class="panel">
+        <h2 id="needs-heading">What we need from you</h2>
+        <ul class="checklist">
+          <li>Someone who can describe how the business runs and review the work</li>
+          <li>The services you want explained, plus any logo or photos you already have the rights to use</li>
+          <li>Access to the tools you want configured, in accounts you own</li>
+          <li>One combined set of feedback for each review round</li>
+        </ul>
+      </article>
+      <article class="panel">
+        <h2>What you leave with</h2>
+        <ul class="checklist">
+          <li>The website, CRM configuration, or automation described in the scope</li>
+          <li>Domains and tool accounts in your name, with the access details</li>
+          <li>A short guide to the work that was handed over</li>
+          <li>Any support arrangement written down, if you asked for one</li>
+        </ul>
+      </article>
     </div>
   </section>
 
+  <Faq />
   <Cta />
 </BaseLayout>

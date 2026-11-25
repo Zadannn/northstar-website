@@ -1,68 +1,35 @@
 ---
 import Cta from "../../components/Cta.astro";
 import PageHero from "../../components/PageHero.astro";
+import ServiceCard from "../../components/ServiceCard.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { services } from "../../config/site";
+import { notes, services } from "../../config/site";
 ---
 
 <BaseLayout
   title="Services"
-  description="Website development, CRM solutions, and business automation. Three equal parts of the work, used on their own or together."
+  description="Website development, CRM setup, and practical business automation. Each service stands on its own."
 >
   <PageHero
-    eyebrow="Services"
-    title="Three services. One way of working."
-    lede="Website development, CRM solutions, and business automation carry equal weight. A project can use one of them, or connect all three so a new enquiry does not stop at the website."
+    kicker="Services"
+    title="Three services, with the same care in each."
+    lede="Website development, CRM solutions, and business automation. They are equal parts of the practice. Start with one, or combine them when the work calls for it."
   />
 
-  <section class="section">
+  <section class="section" aria-label="Service comparison">
     <div class="wrap">
-      <div class="pillar-grid">
-        {
-          services.map((service) => (
-            <article class="card">
-              <h2>{service.title}</h2>
-              <p>{service.summary}</p>
-              <ul>
-                {service.points.map((point) => (
-                  <li>{point}</li>
-                ))}
-              </ul>
-              <a class="button button-secondary" href={service.href}>
-                {service.cta}
-              </a>
-            </article>
-          ))
-        }
+      <div class="card-grid">
+        {services.map((service) => <ServiceCard service={service} level="h2" detailed />)}
+      </div>
+      <p class="note">{notes.workflow}</p>
+      <div class="button-row">
+        <a class="button button-secondary" href="/how-it-works">See how a project runs</a>
       </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="fit-heading">
-    <div class="wrap split">
-      <div class="prose">
-        <h2 id="fit-heading">How they fit together</h2>
-        <p>
-          The website is where someone understands you and sends a message. The CRM is where that message is stored
-          with the other open leads. Automation is the set of steps that files the message, tells the right person, and
-          starts a follow-up.
-        </p>
-        <p>
-          You do not have to buy all three. If the site is the problem, we start there. If enquiries already arrive and
-          then get lost, the CRM and the follow-up matter more than a redesign.
-        </p>
-      </div>
-      <div class="prose">
-        <h2>When each one is needed</h2>
-        <ul class="plain-list">
-          <li>A website, when people cannot tell what you do or how to reach you.</li>
-          <li>A CRM setup, when leads live in inboxes and nobody shares one list.</li>
-          <li>Automation, when the same copy-and-paste work happens after every enquiry.</li>
-        </ul>
-        <p>Anything beyond that scope, including a custom-built platform, is discussed separately. It is not assumed.</p>
-      </div>
-    </div>
-  </section>
-
-  <Cta />
+  <Cta
+    heading="Not sure which service fits?"
+    text="Describe the business and what is getting in the way. We will tell you if we can help, and we will say so if we cannot."
+  />
 </BaseLayout>

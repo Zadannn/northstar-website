@@ -1,52 +1,50 @@
 ---
 import Cta from "../components/Cta.astro";
 import PageHero from "../components/PageHero.astro";
+import Photo from "../components/Photo.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { principles, site } from "../config/site";
+import { notes, positioning, serviceHref, services, site } from "../config/site";
+
+const showPhoto = !site.placeholders.photos;
 ---
 
-<BaseLayout
-  title="About"
-  description={`How ${site.name} approaches website development, CRM setup, and business automation.`}
->
-  <PageHero
-    eyebrow="About"
-    title="Practical digital work, scoped before it is built."
-    lede={`${site.name} helps businesses with websites, CRM setup, and automation. The aim is simple: the public site, the customer record, and the everyday follow-up should make the work easier, not add another system to babysit.`}
-  />
+<BaseLayout title="About" description={positioning.summary}>
+  <PageHero kicker="About" title="A small team, and a practical way of working." lede={positioning.detail} />
 
-  <section class="section">
-    <div class="wrap prose">
-      <h2>How we approach a project</h2>
-      <p>
-        We start by asking what is awkward today. That might be a site people cannot understand, a pile of enquiries
-        with no shared list, or a task someone repeats after every form. We then propose the smallest setup that
-        addresses that problem, and we write down what is included.
-      </p>
-      <p>
-        We configure tools and build the pages we agreed. We do not treat a custom-built CRM, an AI product, or a
-        complex integration as the default. If the request needs that, we say so and it becomes its own scope.
-      </p>
-      <p>
-        This page does not include a company history, team biographies, or a list of past clients. Those are not
-        invented here. What you can judge is the way the work is described and the limits we put on it.
-      </p>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="principles-heading">
-    <div class="wrap">
-      <h2 id="principles-heading">Principles</h2>
-      <div class="principle-grid">
-        {
-          principles.map((item) => (
-            <article>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </article>
-          ))
-        }
+  <section class="section" aria-labelledby="team-heading">
+    <div class:list={["wrap", showPhoto && "split"]}>
+      <div class="prose">
+        <h2 id="team-heading">Who you will talk to</h2>
+        <p>
+          Your main contact is on the US side. They lead the conversation, collect what we need from you, and bring
+          your feedback back. The technical work is done remotely by our technical lead in India. Scope and price are
+          agreed between us before anything is promised to you.
+        </p>
+        <p>
+          We are a small team, not a large firm with a separate sales desk. You deal with the people doing the work. If
+          a request sits outside website development, CRM configuration, or practical automation, we will say so.
+        </p>
+        <h2>What we will not invent</h2>
+        <p>
+          There are no customer logos, testimonials, or case studies on this site, because we will not publish proof we
+          cannot stand behind. {notes.scope}
+        </p>
+        <h2>The work itself</h2>
+        <ul class="checklist">
+          {
+            services.map((service) => (
+              <li>
+                <a href={serviceHref(service.slug)}>{service.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="note">
+          <a href="/how-it-works">See how a project runs</a>. Until launch, treat the phone number and email address as
+          stand-ins.
+        </p>
       </div>
+      {showPhoto && <Photo {...site.photos.about} />}
     </div>
   </section>
 

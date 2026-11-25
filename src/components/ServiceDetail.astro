@@ -1,0 +1,83 @@
+---
+import Cta from "./Cta.astro";
+import PageHero from "./PageHero.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { notes, serviceHref, services, site, type Service } from "../config/site";
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const others = services.filter((item) => item.slug !== service.slug);
+---
+
+<BaseLayout title={service.title} description={service.summary}>
+  <PageHero kicker="Services" title={service.title} lede={service.lede} />
+
+  <section class="section" aria-labelledby="included-heading">
+    <div class="wrap detail-layout">
+      <div>
+        <h2 id="included-heading">What is included</h2>
+        <ul class="checklist">
+          {service.included.map((item) => <li>{item}</li>)}
+        </ul>
+        <h2 id="excluded-heading" class="subhead">Outside this scope</h2>
+        <ul class="checklist checklist-muted" aria-labelledby="excluded-heading">
+          {service.notIncluded.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <aside class="panel">
+        <h2>A good fit when</h2>
+        <p>{service.fit}</p>
+        <p class="note">{service.limit}</p>
+        <p class="note">{notes.scope}</p>
+        <div class="button-row">
+          <a class="button" href={site.cta.href}>{site.cta.label}</a>
+        </div>
+      </aside>
+    </div>
+    {
+      service.sections.length > 0 && (
+        <div class="wrap section-grid stack-gap">
+          {service.sections.map((section) => (
+            <article class="panel">
+              <h2>{section.title}</h2>
+              <p>{section.body}</p>
+              {section.items && (
+                <ul class="checklist">
+                  {section.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          ))}
+        </div>
+      )
+    }
+  </section>
+
+  <section class="section" aria-labelledby="other-services-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="other-services-heading">The other services</h2>
+        <p>Each one stands on its own. <a href="/services">Compare all three</a>.</p>
+      </div>
+      <div class="section-grid">
+        {
+          others.map((item) => (
+            <article class="card">
+              <h3>
+                <a href={serviceHref(item.slug)}>{item.title}</a>
+              </h3>
+              <p>{item.summary}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <Cta />
+</BaseLayout>

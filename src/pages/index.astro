@@ -2,62 +2,90 @@
 import Cta from "../components/Cta.astro";
 import Faq from "../components/Faq.astro";
 import HeroVisual from "../components/HeroVisual.astro";
+import ServiceCard from "../components/ServiceCard.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { audiences, flow, principles, problems, services, site, steps } from "../config/site";
+import {
+  businessTypes,
+  notes,
+  positioning,
+  principles,
+  problems,
+  serviceHref,
+  services,
+  site,
+  steps,
+  workflow,
+} from "../config/site";
 ---
 
-<BaseLayout title="Digital solutions for modern businesses" description={site.description}>
-  <header class="hero">
+<BaseLayout title="Websites, CRM setup, and business automation" description={site.description}>
+  <header class="page-hero home-hero">
     <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow">Digital solutions for modern businesses</p>
+        <p class="eyebrow">Websites, CRM, and automation</p>
         <h1>Better digital experiences. Smarter business operations.</h1>
         <p class="lede">
-          We design professional websites, develop practical CRM solutions and automate business processes to help
-          businesses work smarter, serve customers better and move forward with confidence.
+          {site.name} helps small businesses and growing companies improve a digital presence, organise customer
+          information, and simplify repetitive processes. Each service stands on its own.
         </p>
+        <ul class="hero-services">
+          {
+            services.map((service, index) => (
+              <li>
+                <a href={serviceHref(service.slug)}>
+                  <span class="hero-index">{String(index + 1).padStart(2, "0")}</span>
+                  {service.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
         <div class="button-row">
           <a class="button" href={site.cta.href}>{site.cta.label}</a>
-          <a class="button button-secondary" href="/services">Explore Our Services</a>
+          <a class="button button-secondary" href={site.secondaryCta.href}>{site.secondaryCta.label}</a>
         </div>
       </div>
       <HeroVisual />
     </div>
   </header>
 
-  <section class="section" aria-labelledby="intro-heading">
-    <div class="wrap prose">
-      <h2 id="intro-heading">Your business deserves technology that works for you.</h2>
-      <p>
-        Your website, customer information and everyday processes should work together. We bring design, development
-        and practical automation together to create digital solutions that make running your business simpler.
-      </p>
+  <section class="section" aria-labelledby="practice-heading">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">The practice</p>
+        <h2 id="practice-heading">A clearer presence, and operations that are easier to run.</h2>
+        <p class="lede">{positioning.detail}</p>
+      </div>
+      <div class="panel practice-panel">
+        <h3>What we take on</h3>
+        <ul class="checklist">
+          {
+            services.map((service) => (
+              <li>
+                <a href={serviceHref(service.slug)}>{service.title}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <h3>What we do not claim</h3>
+        <ul class="checklist checklist-muted">
+          <li>A CRM, automation platform, or AI product of our own</li>
+          <li>Guaranteed rankings, revenue, or a fixed launch date</li>
+          <li>Work limited to one industry or one region</li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <section class="section section-tight" aria-labelledby="pillars-heading">
+  <section class="section section-join" aria-labelledby="services-heading">
     <div class="wrap">
       <div class="section-head">
-        <h2 id="pillars-heading">Everything your business needs to work smarter.</h2>
-        <p>From your online presence to your internal workflows, we help bring the right digital solutions together.</p>
+        <p class="eyebrow">Services</p>
+        <h2 id="services-heading">Three services, equal in weight.</h2>
+        <p>Use one, or combine them. Nothing here is a bundle you have to buy.</p>
       </div>
-      <div class="pillar-grid">
-        {
-          services.map((service) => (
-            <article class="card">
-              <h3>{service.title}</h3>
-              <p>{service.summary}</p>
-              <ul>
-                {service.points.map((point) => (
-                  <li>{point}</li>
-                ))}
-              </ul>
-              <a class="button button-secondary" href={service.href}>
-                {service.cta}
-              </a>
-            </article>
-          ))
-        }
+      <div class="card-grid">
+        {services.map((service) => <ServiceCard service={service} />)}
       </div>
     </div>
   </section>
@@ -65,105 +93,106 @@ import { audiences, flow, principles, problems, services, site, steps } from "..
   <section class="section" aria-labelledby="problems-heading">
     <div class="wrap">
       <div class="section-head">
-        <h2 id="problems-heading">Small inefficiencies can become big problems.</h2>
+        <p class="eyebrow">The problems</p>
+        <h2 id="problems-heading">Familiar friction, before any new tool.</h2>
+        <p>Owners usually come to us with one of these, sometimes with all four.</p>
       </div>
-      <div class="problem-grid">
+      <ul class="problem-grid">
         {
-          problems.map((problem) => (
-            <article class="card">
+          problems.map((problem, index) => (
+            <li>
+              <p class="step-num">{String(index + 1).padStart(2, "0")}</p>
               <h3>{problem.title}</h3>
               <p>{problem.text}</p>
-            </article>
+            </li>
           ))
         }
-      </div>
-      <div class="help-panel">
-        <h3>How we help</h3>
-        <p>
-          We start from the work you already do. We look at how people find you, how an enquiry is recorded, and which
-          steps are repeated by hand. Then we propose a practical scope: a website, a CRM setup, an automation, or a
-          combination. What is included, and what is not, is written down before anything is built.
-        </p>
-      </div>
+      </ul>
     </div>
   </section>
 
-  <section class="section band-dark" aria-labelledby="flow-heading">
+  <section class="section band" aria-labelledby="workflow-heading">
     <div class="wrap">
-      <h2 id="flow-heading">Better systems. Less manual work.</h2>
-      <p class="section-intro">
-        One enquiry, followed through. This is the path we set up when a website, a CRM, and a follow-up need to work
-        as one sequence.
-      </p>
-      <ol class="flow-list">
+      <div class="section-head">
+        <p class="eyebrow">Connected work</p>
+        <h2 id="workflow-heading">One way the services can meet.</h2>
+        <p>{notes.workflow}</p>
+      </div>
+      <ol class="workflow">
         {
-          flow.map((step, index) => (
+          workflow.map((step, index) => (
             <li>
-              <span class="flow-num">{String(index + 1).padStart(2, "0")}</span>
-              <strong>{step.title}</strong>
-              <p>{step.text}</p>
+              <span class="flow-index">{index + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.summary}</p>
             </li>
           ))
         }
       </ol>
-      <p class="note">No new software product is required to explain it. A message comes in, it is saved, someone is told, and a follow-up happens.</p>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="audience-heading">
+  <section class="section" aria-labelledby="types-heading">
     <div class="wrap">
       <div class="section-head">
-        <h2 id="audience-heading">Built around the way your business works.</h2>
-        <p class="examples-label">Examples, not a limit. The work is not tied to one trade or one place.</p>
+        <p class="eyebrow">Who it is for</p>
+        <h2 id="types-heading">Many kinds of business. No single niche.</h2>
+        <p>{notes.businesses}</p>
       </div>
-      <div class="audience-grid">
+      <ul class="type-grid">
         {
-          audiences.map((item) => (
-            <article>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </article>
+          businessTypes.map((type) => (
+            <li>
+              <h3>{type.title}</h3>
+              <p>{type.text}</p>
+            </li>
           ))
         }
-      </div>
+      </ul>
     </div>
   </section>
 
   <section class="section" aria-labelledby="process-heading">
     <div class="wrap">
       <div class="section-head">
-        <h2 id="process-heading">A straightforward process, from idea to implementation.</h2>
+        <p class="eyebrow">Process</p>
+        <h2 id="process-heading">A sequence you can follow.</h2>
+        <p>{notes.scope}</p>
       </div>
-      <div class="process-grid">
+      <ol class="process-grid">
         {
-          steps.map((step) => (
-            <article>
-              <span class="process-num">{step.number}</span>
+          steps.map((step, index) => (
+            <li>
+              <p class="step-num">{String(index + 1).padStart(2, "0")}</p>
               <h3>{step.title}</h3>
-              <p>{step.text}</p>
-            </article>
+              <p>{step.summary}</p>
+            </li>
           ))
         }
+      </ol>
+      <div class="button-row">
+        <a class="button button-secondary" href="/how-it-works">Read the full process</a>
       </div>
-      <p><a href="/how-it-works">Read how a project runs</a></p>
     </div>
   </section>
 
   <section class="section" aria-labelledby="principles-heading">
     <div class="wrap">
       <div class="section-head">
-        <h2 id="principles-heading">Technology should make business easier, not more complicated.</h2>
+        <p class="eyebrow">Principles</p>
+        <h2 id="principles-heading">What you can expect from the work.</h2>
+        <p>Short on purpose. These are working rules, not a list of awards.</p>
       </div>
-      <div class="principle-grid">
+      <ul class="principle-grid">
         {
-          principles.map((item) => (
-            <article>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </article>
+          principles.map((principle) => (
+            <li>
+              <h3>{principle.title}</h3>
+              <p>{principle.text}</p>
+            </li>
           ))
         }
-      </div>
+      </ul>
     </div>
   </section>
 

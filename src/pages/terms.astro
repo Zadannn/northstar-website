@@ -1,37 +1,58 @@
 ---
+import PageHero from "../components/PageHero.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { site } from "../config/site";
+import { legalNav, notes, site } from "../config/site";
 ---
 
 <BaseLayout
-  title="Terms and conditions (draft)"
-  description={`Draft terms page for ${site.name}. Not a contract and not a claim of legal compliance.`}
+  title="Terms"
+  description={`Placeholder terms for the ${site.name} draft website. They are not a contract and have not been legally reviewed.`}
 >
-  <header class="page-hero">
-    <div class="wrap">
-      <p class="legal-draft">Draft</p>
-      <p class="eyebrow">Terms</p>
-      <h1>Terms and conditions</h1>
-      <p class="lede">
-        This page is a draft. It is not a contract, it is not legal advice, and it does not claim compliance with any
-        law.
-      </p>
-    </div>
-  </header>
+  <PageHero
+    kicker="Terms"
+    title="What this draft is, and what it is not."
+    lede={notes.legal}
+  />
 
-  <section class="section">
+  <section class="section" aria-labelledby="terms-heading">
     <div class="wrap prose">
-      <h2>What this page is for</h2>
+      <div class="notice">
+        <p>
+          <strong>Placeholder.</strong> These terms have not been reviewed by a lawyer. They are not a client
+          agreement, and they do not guarantee that the site or the services comply with any law.
+        </p>
+      </div>
+
+      <h2 id="terms-heading">Using this website</h2>
       <p>
-        A finished terms page would explain that each project is governed by a written scope, not by the marketing
-        text on this website. That scope would say what is being delivered, what is not included, and what support
-        covers. None of that is in force from this draft.
+        {site.name} is a placeholder name on a draft website. Pages can change. The phone number and email address are
+        stand-ins. Nothing on the site is an offer you can accept by using the form, because the form does not send
+        while it is switched off.
       </p>
+
+      <h2>Services are agreed separately</h2>
       <p>
-        This site does not offer guarantees, unlimited work, or a public price. Nothing here creates an obligation to
-        start work. A qualified adviser should review the finished terms before they are published.
+        Website development, CRM setup, and business automation are described so you can see the shape of the work.
+        A project exists only when a written scope and price are agreed. That document, not this page, says what will
+        be delivered. We do not guarantee timelines, search rankings, revenue, or a number of leads.
       </p>
-      <p><a href="/contact">Back to contact</a></p>
+      <p>Prices are not published on this draft. A figure is real only when it is in the written plan.</p>
+
+      <h2>Accounts and tools</h2>
+      <p>
+        Domains, hosting, CRM products, and automation tools stay in the client’s name when a project goes ahead. We
+        do not provide those products ourselves. Their fees and their terms belong to the companies that do.
+      </p>
+
+      <h2>Before this page can be relied on</h2>
+      <ul class="checklist">
+        <li>Have a qualified person review it for the places you actually operate</li>
+        <li>Replace the placeholder name and contact details</li>
+        <li>Match it to the contract you really use with clients</li>
+      </ul>
+      <p>
+        <a href={legalNav[0].href}>Read the placeholder privacy note</a>.
+      </p>
     </div>
   </section>
 </BaseLayout>

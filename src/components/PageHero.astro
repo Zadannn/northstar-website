@@ -1,17 +1,18 @@
 ---
 interface Props {
-  eyebrow: string;
+  kicker?: string;
   title: string;
   lede: string;
 }
 
-const { eyebrow, title, lede } = Astro.props;
+const { kicker, title, lede } = Astro.props;
 ---
 
 <header class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">{eyebrow}</p>
+    {kicker && <p class="eyebrow">{kicker}</p>}
     <h1>{title}</h1>
     <p class="lede">{lede}</p>
+    <slot />
   </div>
 </header>

@@ -1,13 +1,9 @@
 ---
-import "@fontsource/inter/latin-400.css";
-import "@fontsource/inter/latin-500.css";
-import "@fontsource/inter/latin-600.css";
-import "@fontsource/manrope/latin-600.css";
-import "@fontsource/manrope/latin-700.css";
+import "../styles/fonts.css";
 import "../styles/global.css";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import { site } from "../config/site";
+import { publishesAbsoluteUrls, site } from "../config/site";
 
 interface Props {
   title: string;
@@ -16,21 +12,21 @@ interface Props {
 
 const { title, description } = Astro.props;
 const documentTitle = `${title} · ${site.name}`;
-const canonical = new URL(Astro.url.pathname, site.siteUrl).href;
+const exposeUrls = publishesAbsoluteUrls();
+const canonical = exposeUrls ? new URL(Astro.url.pathname, site.siteUrl).href : "";
 
-// Structured data stays off while the site is a draft or the contact details are still placeholders.
-const structuredData =
-  site.draft || site.placeholders.contact
-    ? null
-    : {
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        name: site.name,
-        url: site.siteUrl,
-        description: site.description,
-        email: site.email,
-        telephone: site.phoneDisplay,
-      };
+// Structured data is only added once the site is live. No address, reviews, or area are invented.
+const structuredData = site.draft
+  ? null
+  : {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      name: site.name,
+      description: site.description,
+      ...(exposeUrls ? { url: site.siteUrl } : {}),
+      ...(site.serviceArea ? { areaServed: site.serviceArea } : {}),
+      ...(site.placeholders.contact ? {} : { telephone: site.phoneDisplay, email: site.email }),
+    };
 ---
 
 <!doctype html>
@@ -41,32 +37,30 @@ const structuredData =
     {site.draft && <meta name="robots" content="noindex, nofollow" />}
     <title>{documentTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {exposeUrls && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#101828" />
+    <meta name="theme-color" content="#f4f1eb" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={documentTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {exposeUrls && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary" />
     {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <div class="top">
-      {
-        site.draft && (
-          <div class="draft-banner" role="region" aria-label="Draft notice">
-            <p>
-              <strong>Draft.</strong> This site is not live. The business name, phone, and email are placeholders, and
-              search engines are asked not to list these pages.
-            </p>
-          </div>
-        )
-      }
-      <Header />
-    </div>
+    {
+      site.draft && (
+        <div class="draft-banner" role="region" aria-label="Draft notice">
+          <p>
+            <strong>Draft.</strong> This site is not live. The name, phone, and email are placeholders, and search
+            engines are asked not to list these pages.
+          </p>
+        </div>
+      )
+    }
+    <Header />
     <main id="main" tabindex="-1">
       <slot />
     </main>

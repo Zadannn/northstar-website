@@ -1,38 +1,286 @@
-<!--
-  Decorative composition: a website frame, an enquiry list, and a short
-  automation path. No customer names, quotes, or statistics.
--->
-<div class="stage" aria-hidden="true">
-  <div class="mock mock-browser">
-    <div class="mock-chrome">
-      <span></span><span></span><span></span>
-      <div class="mock-url"></div>
-    </div>
-    <div class="mock-body">
-      <div class="mock-nav"><i></i><b><i></i><i></i><i></i></b></div>
-      <h3>Clear services. Easy to contact.</h3>
-      <i class="line w1"></i>
-      <i class="line w2"></i>
-      <div class="mock-actions">
-        <i class="chip chip-solid"></i>
-        <i class="chip chip-ghost"></i>
+---
+import { preview, workflow } from "../config/site";
+---
+
+<figure class="hv">
+  <div class="hv-stage" aria-hidden="true">
+    <article class="hv-browser">
+      <div class="hv-chrome">
+        <span class="hv-dot"></span>
+        <span class="hv-dot"></span>
+        <span class="hv-dot"></span>
+        <span class="hv-url">{preview.website.url}</span>
       </div>
+      <div class="hv-site">
+        <p class="hv-kicker">{preview.website.kicker}</p>
+        <p class="hv-name">{preview.website.name}</p>
+        <p class="hv-navline">
+          {preview.website.nav.map((item) => <span>{item}</span>)}
+        </p>
+        <p class="hv-headline">{preview.website.headline}</p>
+        <p class="hv-items">
+          {preview.website.items.map((item) => <span>{item}</span>)}
+        </p>
+        <span class="hv-action">{preview.website.action}</span>
+      </div>
+    </article>
+    <div class="hv-lower">
+      <article class="hv-crm">
+        <header class="hv-panel-head">
+          <p>{preview.crm.title}</p>
+          <span>{preview.crm.kicker}</span>
+        </header>
+        <ul>
+          {
+            preview.crm.rows.map((row) => (
+              <li>
+                <span class="hv-who">
+                  <strong>{row.name}</strong>
+                  <span>{row.detail}</span>
+                </span>
+                <span class="hv-status">{row.status}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </article>
+      <article class="hv-flow">
+        <header class="hv-panel-head">
+          <p>{preview.automation.title}</p>
+          <span>{preview.automation.kicker}</span>
+        </header>
+        <ol>
+          {
+            workflow.map((step, index) => (
+              <li>
+                <span>{index + 1}</span>
+                {step.title}
+              </li>
+            ))
+          }
+        </ol>
+      </article>
     </div>
   </div>
-  <div class="mock mock-crm">
-    <header>
-      <span>Enquiry</span>
-      <span>Status</span>
-    </header>
-    <div class="mock-row"><span>Website form</span><span class="status">New</span></div>
-    <div class="mock-row"><span>Contact form</span><span class="status">Needs a reply</span></div>
-    <div class="mock-row"><span>Follow-up</span><span class="status">Scheduled</span></div>
-  </div>
-  <div class="mock mock-flow">
-    <span>Form</span>
-    <i aria-hidden="true">→</i>
-    <span>Record</span>
-    <i aria-hidden="true">→</i>
-    <span>Notification</span>
-  </div>
-</div>
+  <figcaption>{preview.disclaimer}</figcaption>
+</figure>
+
+<style>
+  .hv {
+    margin: 0;
+    padding: 0.85rem;
+    background: var(--color-bg-muted);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hv-stage {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .hv-browser,
+  .hv-crm,
+  .hv-flow {
+    background: var(--color-bg-raised);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    min-width: 0;
+  }
+
+  .hv-chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.55rem 0.7rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .hv-dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--color-line-strong);
+    flex: none;
+  }
+
+  .hv-url {
+    min-width: 0;
+    margin-left: 0.35rem;
+    padding: 0.12rem 0.55rem;
+    overflow: hidden;
+    color: var(--color-ink-soft);
+    font-size: 0.75rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background: var(--color-bg);
+    border-radius: 999px;
+  }
+
+  .hv-site {
+    padding: 0.9rem 0.95rem 1rem;
+  }
+
+  .hv-kicker,
+  .hv-panel-head span {
+    margin: 0;
+    color: var(--color-accent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .hv-name {
+    margin: 0.35rem 0 0;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .hv-navline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.75rem;
+    margin: 0.35rem 0 0.85rem;
+    color: var(--color-ink-soft);
+    font-size: 0.75rem;
+  }
+
+  .hv-headline {
+    margin: 0;
+    max-width: 16rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-weight: 680;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .hv-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.85rem 0;
+  }
+
+  .hv-items span,
+  .hv-action,
+  .hv-status {
+    font-size: 0.75rem;
+  }
+
+  .hv-items span {
+    padding: 0.22rem 0.45rem;
+    color: var(--color-ink-soft);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+  }
+
+  .hv-action {
+    display: inline-flex;
+    max-width: 100%;
+    padding: 0.4rem 0.65rem;
+    color: var(--color-bg-raised);
+    font-weight: 650;
+    background: var(--color-ink);
+    border-radius: var(--radius-sm);
+  }
+
+  .hv-lower {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .hv-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .hv-panel-head p {
+    margin: 0;
+    font-size: 0.84rem;
+    font-weight: 650;
+  }
+
+  .hv-crm ul,
+  .hv-flow ol {
+    list-style: none;
+    margin: 0;
+    padding: 0.35rem 0.75rem 0.7rem;
+  }
+
+  .hv-crm li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.45rem 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .hv-crm li:first-child {
+    border-top: 0;
+  }
+
+  .hv-who {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .hv-who strong,
+  .hv-who span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .hv-who strong {
+    font-size: 0.84rem;
+  }
+
+  .hv-who span {
+    color: var(--color-ink-soft);
+    font-size: 0.75rem;
+  }
+
+  .hv-status {
+    flex: none;
+    color: var(--color-accent);
+    font-weight: 650;
+  }
+
+  .hv-flow li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    padding: 0.28rem 0;
+    color: var(--color-ink-soft);
+    font-size: 0.8rem;
+  }
+
+  .hv-flow li span {
+    color: var(--color-accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .hv figcaption {
+    margin: 0.75rem 0.15rem 0.15rem;
+    color: var(--color-ink-soft);
+    font-size: 0.82rem;
+  }
+
+  @media (min-width: 520px) {
+    .hv-lower {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    }
+  }
+</style>

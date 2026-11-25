@@ -1,0 +1,78 @@
+---
+import { serviceHref, type Service } from "../config/site";
+
+interface Props {
+  service: Service;
+  level?: "h2" | "h3";
+  detailed?: boolean;
+}
+
+const { service, level = "h3", detailed = false } = Astro.props;
+const Heading = level;
+---
+
+<article class="card service-card" id={service.slug}>
+  <div class:list={["mini", service.visual === "crm" && "is-crm"]} aria-hidden="true">
+    {
+      service.visual === "website" && (
+        <div class="mini-website">
+          <span class="mini-chrome" />
+          <span class="mini-line" />
+          <span class="mini-line short" />
+          <span class="mini-row">
+            <i />
+            <i />
+          </span>
+        </div>
+      )
+    }
+    {
+      service.visual === "crm" && (
+        <div class="mini-crm">
+          <span>
+            <i />
+            <b />
+            <em />
+          </span>
+          <span>
+            <i />
+            <b />
+            <em />
+          </span>
+          <span>
+            <i />
+            <b />
+            <em />
+          </span>
+        </div>
+      )
+    }
+    {
+      service.visual === "automation" && (
+        <div class="flow-dots">
+          <i />
+          <i />
+          <i />
+          <i />
+        </div>
+      )
+    }
+  </div>
+  <Heading>
+    <a href={serviceHref(service.slug)}>{service.title}</a>
+  </Heading>
+  <p>{service.summary}</p>
+  <ul class="cap-list">
+    {service.capabilities.map((item) => <li>{item}</li>)}
+  </ul>
+  {
+    detailed && (
+      <div class="service-more">
+        <p>
+          <strong>A good fit when.</strong> {service.fit}
+        </p>
+        <p class="note">{service.limit}</p>
+      </div>
+    )
+  }
+</article>

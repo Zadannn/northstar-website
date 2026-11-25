@@ -1,170 +1,95 @@
 ---
+import ContactDetails from "../components/ContactDetails.astro";
 import PageHero from "../components/PageHero.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { projectTypes, site } from "../config/site";
+import { notes, services, site } from "../config/site";
 
 const formLive = Boolean(site.formEndpoint);
 ---
 
 <BaseLayout
   title="Contact"
-  description={`Send an enquiry to ${site.name}. Phone and email on this page are placeholders until real details are added.`}
+  description={`Talk to ${site.name} about a website, CRM setup, or a practical automation. The form stays off until a real form address is configured.`}
 >
   <PageHero
-    eyebrow="Contact"
+    kicker="Contact"
     title="Tell us what you want to improve."
     lede={formLive
-      ? "Use the form, or call or email. A short note about the business and the problem is enough to start."
-      : "The form is switched off until a form address is added in the site configuration. It does not send messages. Use the phone or email below. Both are still placeholders."}
+      ? "Send a message, or email or call. Tell us what the business does and whether you are asking about a website, a CRM, automation, or more than one."
+      : "The form on this page is switched off. It does not send anything, and there is no success message behind it. Email or call, and tell us what the business does and what you want help with."}
   />
 
-  <section class="section">
+  <section class="section" aria-labelledby="contact-heading">
     <div class="wrap contact-grid">
       <div>
-        <h2>Phone and email</h2>
-        <p class="contact-line">
-          {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
-          <a class="contact-value" href={site.phoneHref}>{site.phoneDisplay}</a>
+        <h2 id="contact-heading">Phone and email</h2>
+        <ContactDetails large />
+        <p class="note">
+          These contact details are placeholders until the real ones are ready. We are not limited to one city or one
+          industry.
         </p>
-        <p class="contact-line">
-          {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
-          <a class="contact-value" href={`mailto:${site.email}`}>{site.email}</a>
-        </p>
-        <p>Say whether you are asking about a website, a CRM, automation, or you are not sure yet.</p>
       </div>
 
       <form
         class="contact-form"
-        id="enquiry-form"
-        method="post"
+        method={formLive ? "post" : undefined}
         action={formLive ? site.formEndpoint : undefined}
-        novalidate={formLive}
-        data-live={formLive ? "true" : "false"}
         aria-describedby="form-status"
       >
-        <p id="form-status" class="form-status" role="status" aria-live="polite">
-          {
-            formLive
-              ? "We use what you send only to reply to this enquiry. Do not include passwords or payment details."
-              : "This form is turned off. It does not send messages. Use the phone number or email instead."
-          }
-        </p>
+        <div id="form-status" class="form-status">
+          <p>{formLive ? "We use what you send only to reply. Please do not include passwords or payment details." : notes.formOff}</p>
+        </div>
         <fieldset disabled={!formLive}>
-          <legend>Project enquiry</legend>
+          <legend>Send a message</legend>
           <div class="fields">
             <div class="fields-split">
               <div>
-                <label for="name">Your name</label>
+                <label for="name">Your name <span class="req">(required)</span></label>
                 <input id="name" name="name" type="text" autocomplete="name" required />
-                <p class="field-error" id="name-error"></p>
               </div>
               <div>
-                <label for="email">Email</label>
+                <label for="email">Email <span class="req">(required)</span></label>
                 <input id="email" name="email" type="email" autocomplete="email" required />
-                <p class="field-error" id="email-error"></p>
               </div>
             </div>
             <div class="fields-split">
               <div>
-                <label for="phone">Phone <span class="visually-hidden">(optional)</span></label>
+                <label for="phone">Phone</label>
                 <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
               </div>
               <div>
-                <label for="business">Business name <span class="visually-hidden">(optional)</span></label>
+                <label for="business">Business name</label>
                 <input id="business" name="business" type="text" autocomplete="organization" />
               </div>
             </div>
-            <div>
-              <label for="project-type">Project type</label>
-              <select id="project-type" name="project-type" required>
-                <option value="">Select one</option>
-                {projectTypes.map((type) => <option value={type}>{type}</option>)}
-              </select>
-              <p class="field-error" id="project-type-error"></p>
+            <div class="fields-split">
+              <div>
+                <label for="website">Current website</label>
+                <input id="website" name="website" type="url" inputmode="url" autocomplete="url" />
+              </div>
+              <div>
+                <label for="need">What do you need? <span class="req">(required)</span></label>
+                <select id="need" name="need" required>
+                  <option value="">Select one</option>
+                  {services.map((service) => <option>{service.title}</option>)}
+                  <option>Not sure yet</option>
+                </select>
+              </div>
             </div>
             <div>
-              <label for="message">Message</label>
+              <label for="message">Message <span class="req">(required)</span></label>
               <textarea id="message" name="message" required></textarea>
-              <p class="field-error" id="message-error"></p>
             </div>
             <div class="hp" aria-hidden="true">
               <label for="company-website">Leave this empty</label>
               <input id="company-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
             </div>
-            <button class="button" type="submit" disabled={!formLive}>Send message</button>
+            <button class="button" type="submit" disabled={!formLive}>
+              {formLive ? "Send message" : "Form unavailable"}
+            </button>
           </div>
         </fieldset>
       </form>
     </div>
   </section>
 </BaseLayout>
-
-<script>
-  const form = document.querySelector("#enquiry-form");
-  if (form instanceof HTMLFormElement && form.dataset.live === "true") {
-    const status = document.querySelector("#form-status");
-    const setStatus = (state: string, text: string) => {
-      if (!(status instanceof HTMLElement)) return;
-      status.dataset.state = state;
-      status.textContent = text;
-    };
-    const fields = [
-      { id: "name", message: "Enter your name." },
-      { id: "email", message: "Enter a valid email address." },
-      { id: "project-type", message: "Select a project type." },
-      { id: "message", message: "Tell us a little about what you want to improve." },
-    ];
-
-    const setError = (id: string, message: string) => {
-      const input = document.getElementById(id);
-      const error = document.getElementById(`${id}-error`);
-      if (input instanceof HTMLElement) {
-        input.setAttribute("aria-invalid", message ? "true" : "false");
-        if (message) input.setAttribute("aria-describedby", `${id}-error`);
-      }
-      if (error) error.textContent = message;
-    };
-
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      let valid = true;
-      for (const field of fields) {
-        const input = document.getElementById(field.id);
-        const value = input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement || input instanceof HTMLSelectElement
-          ? input.value.trim()
-          : "";
-        const emailBad = field.id === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-        const message = !value || emailBad ? field.message : "";
-        setError(field.id, message);
-        if (message) valid = false;
-      }
-      if (!valid) {
-        setStatus("error", "Check the highlighted fields, then send the message again.");
-        return;
-      }
-
-      const trap = form.querySelector<HTMLInputElement>("[name='_gotcha']");
-      if (trap && trap.value) {
-        setStatus("success", "Message sent. We will reply using the details you gave.");
-        return;
-      }
-
-      const button = form.querySelector("button[type='submit']");
-      if (button instanceof HTMLButtonElement) button.disabled = true;
-      try {
-        const response = await fetch(form.action, {
-          method: "POST",
-          body: new FormData(form),
-          headers: { Accept: "application/json" },
-        });
-        if (!response.ok) throw new Error("Request failed");
-        form.reset();
-        setStatus("success", "Message sent. We will reply using the details you gave.");
-      } catch {
-        setStatus("error", "The message could not be sent. Please try again, or use the phone or email on this page.");
-      } finally {
-        if (button instanceof HTMLButtonElement) button.disabled = false;
-      }
-    });
-  }
-</script>

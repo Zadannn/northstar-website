@@ -1,23 +1,27 @@
 ---
-import { site } from "../config/site";
+import { closing, site } from "../config/site";
 
 interface Props {
   heading?: string;
   text?: string;
 }
 
-const {
-  heading = "Have an idea? Let's make it work.",
-  text = "Tell us what you're trying to improve. We'll help you explore a practical digital solution for your business.",
-} = Astro.props;
+const { heading = closing.heading, text = closing.text } = Astro.props;
 ---
 
-<section class="cta-band" aria-labelledby="cta-heading">
+<section class="section" aria-labelledby="cta-heading">
   <div class="wrap">
-    <h2 id="cta-heading">{heading}</h2>
-    <p class="lede">{text}</p>
-    <div class="button-row">
-      <a class="button" href={site.cta.href}>{site.cta.label}</a>
+    <div class="cta-panel">
+      <p class="eyebrow">{closing.eyebrow}</p>
+      <h2 id="cta-heading">{heading}</h2>
+      <p>{text}</p>
+      <div class="cta-actions">
+        <a class="button button-inverse" href={site.cta.href}>{site.cta.label}</a>
+        <p class="cta-alt">
+          {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
     </div>
   </div>
 </section>

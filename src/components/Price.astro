@@ -1,0 +1,18 @@
+---
+import { site } from "../config/site";
+
+interface Props {
+  amount: string;
+}
+
+const { amount } = Astro.props;
+---
+
+{
+  site.showPricing && (
+    <p class="price">
+      {site.placeholders.prices && <span class="placeholder-tag">Placeholder</span>}
+      <span>Price: {amount}</span>
+    </p>
+  )
+}

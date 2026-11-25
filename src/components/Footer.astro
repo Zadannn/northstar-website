@@ -1,19 +1,34 @@
 ---
+import ContactDetails from "./ContactDetails.astro";
 import Wordmark from "./Wordmark.astro";
-import { legalPaths, nav, services, site } from "../config/site";
+import { legalNav, nav, services, serviceHref, site } from "../config/site";
 
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="wrap footer-grid">
-    <div>
-      <Wordmark />
-      <p>Websites, CRM setup, and practical automation for businesses that want clearer customer experiences and simpler day-to-day work.</p>
+    <div class="footer-brand">
+      <a class="logo" href="/" aria-label={`${site.name}, home`}>
+        <Wordmark decorative />
+      </a>
+      <p>{site.tagline}</p>
     </div>
-    <nav aria-label="Footer">
-      <h2>Explore</h2>
-      <ul class="footer-links">
+    <nav aria-label="Services">
+      <p class="footer-heading">Services</p>
+      <ul class="footer-nav">
+        {
+          services.map((service) => (
+            <li>
+              <a href={serviceHref(service.slug)}>{service.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <nav aria-label="Pages">
+      <p class="footer-heading">Explore</p>
+      <ul class="footer-nav">
         {
           nav.map((item) => (
             <li>
@@ -23,36 +38,20 @@ const year = new Date().getFullYear();
         }
       </ul>
     </nav>
-    <nav aria-label="Services">
-      <h2>Services</h2>
-      <ul class="footer-links">
-        {
-          services.map((service) => (
-            <li>
-              <a href={service.href}>{service.title}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-    <address>
-      <h2>Contact</h2>
-      <p class="contact-line">
-        {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
-        <a href={site.phoneHref}>{site.phoneDisplay}</a>
-      </p>
-      <p class="contact-line">
-        {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
-        <a href={`mailto:${site.email}`}>{site.email}</a>
-      </p>
-    </address>
+    <div>
+      <p class="footer-heading">Contact</p>
+      <ContactDetails />
+    </div>
   </div>
   <div class="wrap legal-row">
+    <p>
+      © {year} {site.name}.
+      {site.draft && " Draft website. Not published."}
+    </p>
     {
-      legalPaths.map((item) => (
+      legalNav.map((item) => (
         <a href={item.href}>{item.label}</a>
       ))
     }
-    <span>© {year} {site.name}.{site.draft && " Draft website — not published yet."}</span>
   </div>
 </footer>
