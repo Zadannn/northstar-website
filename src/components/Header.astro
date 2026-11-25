@@ -1,5 +1,5 @@
 ---
-import Mark from "./Mark.astro";
+import Wordmark from "./Wordmark.astro";
 import { nav, site } from "../config/site";
 
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
@@ -12,46 +12,46 @@ function isCurrent(href: string): boolean {
 
 <header class="site-header">
   <div class="wrap header-shell">
-    <a class="logo" href="/">
-      <Mark />
-      <span class="logo-text">
-        {site.name}
-        <small>Serving {site.location}</small>
-      </span>
-      <span class="visually-hidden"> home</span>
+    <a class="logo" href="/" aria-label={`${site.name}, home`}>
+      <Wordmark decorative />
     </a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <ul class="nav-list">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <a class="button header-cta" href={site.cta.href}>{site.cta.label}</a>
     <details class="menu">
       <summary class="nav-toggle">
         <span class="nav-toggle-open">Menu</span>
         <span class="nav-toggle-close">Close</span>
       </summary>
-      <nav class="site-nav" aria-label="Primary">
-        <ul class="nav-list">
-          {
-            nav.map((item) => (
-              <li>
-                <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
-                  {item.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
+      <div class="menu-panel">
+        <nav class="site-nav" aria-label="Primary">
+          <ul class="nav-list">
+            {
+              nav.map((item) => (
+                <li>
+                  <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <div class="nav-cta">
+          <a class="button" href={site.cta.href}>{site.cta.label}</a>
+        </div>
+      </div>
     </details>
   </div>
 </header>
-
-<style>
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-</style>

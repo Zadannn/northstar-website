@@ -1,18 +1,28 @@
 ---
 import { faqs } from "../config/site";
+
+interface Props {
+  heading?: string;
+  lede?: string;
+}
+
+const { heading = "Questions we answer directly", lede = "Plain answers, including the limits of what we will promise." } =
+  Astro.props;
 ---
 
 <section class="section" aria-labelledby="faq-heading">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="faq-heading">Straight answers</h2>
-      <p>The questions owners ask us most.</p>
+      <h2 id="faq-heading">{heading}</h2>
+      <p>{lede}</p>
     </div>
     <div class="faq">
       {
         faqs.map((item) => (
           <details>
-            <summary>{item.question}</summary>
+            <summary>
+              <h3>{item.question}</h3>
+            </summary>
             <p>{item.answer}</p>
           </details>
         ))

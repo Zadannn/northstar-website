@@ -1,8 +1,9 @@
 ---
+import "../styles/fonts.css";
 import "../styles/global.css";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import { site } from "../config/site";
+import { publishesAbsoluteUrls, site } from "../config/site";
 
 interface Props {
   title: string;
@@ -11,18 +12,19 @@ interface Props {
 
 const { title, description } = Astro.props;
 const documentTitle = `${title} · ${site.name}`;
-const canonical = new URL(Astro.url.pathname, site.siteUrl).href;
+const exposeUrls = publishesAbsoluteUrls();
+const canonical = exposeUrls ? new URL(Astro.url.pathname, site.siteUrl).href : "";
 
-// Structured data is only added once the site is live and the contact details are real.
+// Structured data is only added once the site is live. No address, reviews, or area are invented.
 const structuredData = site.draft
   ? null
   : {
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
       name: site.name,
-      url: site.siteUrl,
       description: site.description,
-      areaServed: site.location,
+      ...(exposeUrls ? { url: site.siteUrl } : {}),
+      ...(site.serviceArea ? { areaServed: site.serviceArea } : {}),
       ...(site.placeholders.contact ? {} : { telephone: site.phoneDisplay, email: site.email }),
     };
 ---
@@ -35,32 +37,30 @@ const structuredData = site.draft
     {site.draft && <meta name="robots" content="noindex, nofollow" />}
     <title>{documentTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {exposeUrls && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#1f4a3a" />
+    <meta name="theme-color" content="#f4f1eb" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={documentTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {exposeUrls && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary" />
     {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <div class="top">
-      {
-        site.draft && (
-          <div class="draft-banner" role="region" aria-label="Draft notice">
-            <p>
-              <strong>Draft.</strong> This site is not live. The business name, phone, email, photos, and prices are
-              placeholders, and search engines are asked not to list these pages.
-            </p>
-          </div>
-        )
-      }
-      <Header />
-    </div>
+    {
+      site.draft && (
+        <div class="draft-banner" role="region" aria-label="Draft notice">
+          <p>
+            <strong>Draft.</strong> This site is not live. The name, phone, and email are placeholders, and search
+            engines are asked not to list these pages.
+          </p>
+        </div>
+      )
+    }
+    <Header />
     <main id="main" tabindex="-1">
       <slot />
     </main>

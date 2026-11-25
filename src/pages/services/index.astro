@@ -1,46 +1,35 @@
 ---
 import Cta from "../../components/Cta.astro";
-import Photo from "../../components/Photo.astro";
-import Price from "../../components/Price.astro";
+import PageHero from "../../components/PageHero.astro";
+import ServiceCard from "../../components/ServiceCard.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { services, site } from "../../config/site";
+import { notes, services } from "../../config/site";
 ---
 
 <BaseLayout
   title="Services"
-  description="Website launch, website care, and lead follow-up setup for New Jersey home-service businesses."
+  description="Website development, CRM setup, and practical business automation. Each service stands on its own."
 >
-  <header class="page-hero">
-    <div class="wrap hero-grid">
-      <div>
-        <p class="kicker">Services</p>
-        <h1>A website, its upkeep, and the follow-up that keeps enquiries from going cold.</h1>
-        <p class="lede">
-          Start with a website that gets calls and quote requests. Add care so it keeps working, and follow-up so a
-          missed call or a quiet quote does not cost you a job. Prices below are placeholders.
-        </p>
-      </div>
-      <Photo {...site.photos.work} />
-    </div>
-  </header>
+  <PageHero
+    kicker="Services"
+    title="Three services, with the same care in each."
+    lede="Website development, CRM solutions, and business automation. They are equal parts of the practice. Start with one, or combine them when the work calls for it."
+  />
 
-  <section class="section" aria-label="Service list">
+  <section class="section" aria-label="Service comparison">
     <div class="wrap">
       <div class="card-grid">
-        {
-          services.map((service) => (
-            <article class="card" id={service.slug}>
-              <h2>
-                <a href={`/services/${service.slug}`}>{service.title}</a>
-              </h2>
-              <p>{service.summary}</p>
-              <Price amount={site.prices[service.priceKey]} />
-            </article>
-          ))
-        }
+        {services.map((service) => <ServiceCard service={service} level="h2" detailed />)}
+      </div>
+      <p class="note">{notes.workflow}</p>
+      <div class="button-row">
+        <a class="button button-secondary" href="/how-it-works">See how a project runs</a>
       </div>
     </div>
   </section>
 
-  <Cta heading="Not sure where to start?" text="Describe your business and what keeps slipping. We will tell you honestly where to start, even if that is only a website." />
+  <Cta
+    heading="Not sure which service fits?"
+    text="Describe the business and what is getting in the way. We will tell you if we can help, and we will say so if we cannot."
+  />
 </BaseLayout>

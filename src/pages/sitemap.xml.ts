@@ -1,18 +1,20 @@
 import type { APIRoute } from "astro";
-import { nav, services, site } from "../config/site";
+import { legalNav, nav, publishesAbsoluteUrls, serviceHref, services, site } from "../config/site";
 
 /**
- * A plain sitemap built from the navigation and the service list, so there is
- * nothing extra to install. While the site is a draft it is left empty.
+ * Built from the navigation, service list, and legal links. While the site is a
+ * draft, or the public address is still the example.com placeholder, the
+ * sitemap is left empty so that address is not advertised.
  */
 export const GET: APIRoute = () => {
   const paths = [
     ...nav.map((item) => item.href),
-    ...services.map((service) => `/services/${service.slug}`),
+    ...services.map((service) => serviceHref(service.slug)),
+    ...legalNav.map((item) => item.href),
   ];
-  const urls = site.draft
-    ? []
-    : [...new Set(paths)].map((path) => `  <url><loc>${new URL(path, site.siteUrl).href}</loc></url>`);
+  const urls = publishesAbsoluteUrls()
+    ? [...new Set(paths)].map((path) => `  <url><loc>${new URL(path, site.siteUrl).href}</loc></url>`)
+    : [];
 
   const body = [
     '<?xml version="1.0" encoding="UTF-8"?>',

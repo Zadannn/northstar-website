@@ -1,29 +1,26 @@
 ---
-import { site } from "../config/site";
+import { closing, site } from "../config/site";
 
 interface Props {
   heading?: string;
   text?: string;
 }
 
-const formLive = Boolean(site.formEndpoint);
-
-const {
-  heading = "Start with a conversation.",
-  text = formLive
-    ? "Call, email, or send a message. Tell us what you do and which towns you serve."
-    : "Call or email. The form on the contact page is turned off and does not send messages yet.",
-} = Astro.props;
+const { heading = closing.heading, text = closing.text } = Astro.props;
 ---
 
 <section class="section" aria-labelledby="cta-heading">
   <div class="wrap">
-    <div class="cta">
+    <div class="cta-panel">
+      <p class="eyebrow">{closing.eyebrow}</p>
       <h2 id="cta-heading">{heading}</h2>
       <p>{text}</p>
-      <div class="button-row">
-        <a class="button" href="/contact">Get in touch</a>
-        <a class="button button-secondary" href={site.phoneHref}>Call {site.phoneDisplay}</a>
+      <div class="cta-actions">
+        <a class="button button-inverse" href={site.cta.href}>{site.cta.label}</a>
+        <p class="cta-alt">
+          {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
       </div>
     </div>
   </div>

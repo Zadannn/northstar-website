@@ -1,0 +1,26 @@
+---
+import { site } from "../config/site";
+
+interface Props {
+  /** When a parent link already names the business, keep the image out of the accessible name. */
+  decorative?: boolean;
+}
+
+const { decorative = false } = Astro.props;
+const hasLogo = site.logo.src !== "";
+---
+
+{
+  hasLogo ? (
+    <img
+      class="wordmark-logo"
+      src={site.logo.src}
+      width={site.logo.width}
+      height={site.logo.height}
+      alt={decorative ? "" : site.name}
+      decoding="async"
+    />
+  ) : (
+    <span class="wordmark">{site.name}</span>
+  )
+}

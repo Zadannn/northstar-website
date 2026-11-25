@@ -3,48 +3,48 @@ import Cta from "../components/Cta.astro";
 import PageHero from "../components/PageHero.astro";
 import Photo from "../components/Photo.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { site, trades } from "../config/site";
+import { notes, positioning, serviceHref, services, site } from "../config/site";
+
+const showPhoto = !site.placeholders.photos;
 ---
 
-<BaseLayout
-  title="About"
-  description="Northstar is a small US–India team building websites and simple lead follow-up for New Jersey home-service businesses."
->
-  <PageHero
-    kicker="About"
-    title="A small US–India team, focused on New Jersey service businesses."
-    lede={`${site.name} builds practical things for local-service businesses: a website people can use, upkeep you do not have to think about, and a few automations that match the way you already work.`}
-  />
+<BaseLayout title="About" description={positioning.summary}>
+  <PageHero kicker="About" title="A small team, and a practical way of working." lede={positioning.detail} />
 
-  <section class="section">
-    <div class="wrap split">
-      <div>
-        <h2>Who you will talk to</h2>
+  <section class="section" aria-labelledby="team-heading">
+    <div class:list={["wrap", showPhoto && "split"]}>
+      <div class="prose">
+        <h2 id="team-heading">Who you will talk to</h2>
         <p>
-          Your main contact is on the US side. They listen to what you need, collect your content and feedback, and keep
-          you updated. The website itself is built and tested by our technical lead, working remotely from India. Scope,
-          price, and timeline are agreed between the two of us before anything is promised to you.
+          Your main contact is on the US side. They lead the conversation, collect what we need from you, and bring
+          your feedback back. The technical work is done remotely by our technical lead in India. Scope and price are
+          agreed between us before anything is promised to you.
         </p>
         <p>
-          We are a small team, not a large firm with a sales department. That means you deal with the people doing the
-          work, and we only take on what we can deliver well.
+          We are a small team, not a large firm with a separate sales desk. You deal with the people doing the work. If
+          a request sits outside website development, CRM configuration, or practical automation, we will say so.
         </p>
-        <h2>Who we work with</h2>
-        <p>We are starting with these trades so we can learn them properly:</p>
-        <ul class="pills">
-          {trades.map((trade) => <li>{trade}</li>)}
-        </ul>
-        <h2>How we work</h2>
+        <h2>What we will not invent</h2>
+        <p>
+          There are no customer logos, testimonials, or case studies on this site, because we will not publish proof we
+          cannot stand behind. {notes.scope}
+        </p>
+        <h2>The work itself</h2>
         <ul class="checklist">
-          <li>Written scope and price before work starts</li>
-          <li>You own your domain and accounts</li>
-          <li>No guaranteed rankings or leads, and no made-up reviews or case studies</li>
+          {
+            services.map((service) => (
+              <li>
+                <a href={serviceHref(service.slug)}>{service.title}</a>
+              </li>
+            ))
+          }
         </ul>
         <p class="note">
-          Until launch, treat the contact details, photos, and prices on this site as stand-ins.
+          <a href="/how-it-works">See how a project runs</a>. Until launch, treat the phone number and email address as
+          stand-ins.
         </p>
       </div>
-      <Photo {...site.photos.about} />
+      {showPhoto && <Photo {...site.photos.about} />}
     </div>
   </section>
 

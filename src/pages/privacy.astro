@@ -1,0 +1,63 @@
+---
+import PageHero from "../components/PageHero.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { legalNav, notes, site } from "../config/site";
+
+const formLive = Boolean(site.formEndpoint);
+---
+
+<BaseLayout
+  title="Privacy"
+  description={`Placeholder privacy notice for the ${site.name} draft website. It has not been legally reviewed.`}
+>
+  <PageHero
+    kicker="Privacy"
+    title="How this draft treats information."
+    lede={notes.legal}
+  />
+
+  <section class="section" aria-labelledby="privacy-heading">
+    <div class="wrap prose">
+      <div class="notice">
+        <p>
+          <strong>Placeholder.</strong> This page is a readable draft, not a finished policy. It has not been reviewed
+          by a lawyer and it does not mean the site complies with any privacy law.
+        </p>
+      </div>
+
+      <h2 id="privacy-heading">What this draft does today</h2>
+      {
+        formLive ? (
+          <p>
+            The contact form is switched on and sends what you submit to the form address configured for this site. Do
+            not send passwords or payment details. A finished policy will need to name that provider.
+          </p>
+        ) : (
+          <p>
+            The contact form is switched off. It does not send a message, it is not stored, and it does not show a
+            success confirmation. There is no form inbox behind it.
+          </p>
+        )
+      }
+      <p>
+        If you email or call, you are contacting a placeholder address until real contact details are published. This
+        draft does not describe analytics, advertising cookies, or a mailing list, because none of those are set up
+        here.
+      </p>
+
+      <h2>What a real policy still needs</h2>
+      <ul class="checklist">
+        <li>A review by someone qualified to advise on the laws that apply to you</li>
+        <li>The name of any form, hosting, or analytics provider you actually use</li>
+        <li>How long messages are kept, and who can see them</li>
+        <li>How a person can ask for a correction or a deletion</li>
+      </ul>
+      <p>
+        Until that review exists, do not treat this page as a promise about privacy rights.
+      </p>
+      <p>
+        <a href={legalNav[1].href}>Read the placeholder terms</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

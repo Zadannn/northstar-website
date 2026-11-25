@@ -1,32 +1,33 @@
 ---
-import Mark from "./Mark.astro";
-import { nav, site } from "../config/site";
+import ContactDetails from "./ContactDetails.astro";
+import Wordmark from "./Wordmark.astro";
+import { legalNav, nav, services, serviceHref, site } from "../config/site";
 
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="wrap footer-grid">
-    <div>
-      <p class="logo-lockup">
-        <Mark size={26} />
-        <span>{site.name}</span>
-      </p>
-      <p>
-        Websites and lead follow-up for local-service businesses in {site.location}.
-      </p>
+    <div class="footer-brand">
+      <a class="logo" href="/" aria-label={`${site.name}, home`}>
+        <Wordmark decorative />
+      </a>
+      <p>{site.tagline}</p>
     </div>
-    <address>
-      <p class="contact-line">
-        {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
-        <a href={site.phoneHref}>{site.phoneDisplay}</a>
-      </p>
-      <p class="contact-line">
-        {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
-        <a href={`mailto:${site.email}`}>{site.email}</a>
-      </p>
-    </address>
-    <nav aria-label="Footer">
+    <nav aria-label="Services">
+      <p class="footer-heading">Services</p>
+      <ul class="footer-nav">
+        {
+          services.map((service) => (
+            <li>
+              <a href={serviceHref(service.slug)}>{service.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <nav aria-label="Pages">
+      <p class="footer-heading">Explore</p>
       <ul class="footer-nav">
         {
           nav.map((item) => (
@@ -37,11 +38,20 @@ const year = new Date().getFullYear();
         }
       </ul>
     </nav>
+    <div>
+      <p class="footer-heading">Contact</p>
+      <ContactDetails />
+    </div>
   </div>
-  <div class="wrap">
-    <p class="legal">
+  <div class="wrap legal-row">
+    <p>
       © {year} {site.name}.
-      {site.draft && " Draft website — not published yet."}
+      {site.draft && " Draft website. Not published."}
     </p>
+    {
+      legalNav.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))
+    }
   </div>
 </footer>

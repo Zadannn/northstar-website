@@ -1,0 +1,18 @@
+---
+import { site } from "../config/site";
+
+interface Props {
+  large?: boolean;
+}
+
+const { large = false } = Astro.props;
+---
+
+<p class="contact-line">
+  {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
+  <a class:list={{ "contact-value": large }} href={site.phoneHref}>{site.phoneDisplay}</a>
+</p>
+<p class="contact-line">
+  {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
+  <a class:list={{ "contact-value": large }} href={`mailto:${site.email}`}>{site.email}</a>
+</p>

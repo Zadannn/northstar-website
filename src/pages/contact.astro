@@ -1,62 +1,54 @@
 ---
+import ContactDetails from "../components/ContactDetails.astro";
 import PageHero from "../components/PageHero.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { site } from "../config/site";
+import { notes, services, site } from "../config/site";
 
-// The form only turns on once a form service address is set in src/config/site.ts.
 const formLive = Boolean(site.formEndpoint);
 ---
 
 <BaseLayout
   title="Contact"
-  description="Call, email, or send a message to Northstar. Tell us what you do and which towns you serve."
+  description={`Talk to ${site.name} about a website, CRM setup, or a practical automation. The form stays off until a real form address is configured.`}
 >
   <PageHero
     kicker="Contact"
-    title="Tell us what you want to fix."
+    title="Tell us what you want to improve."
     lede={formLive
-      ? "Send a message or call. Tell us what you do, which towns you serve, and whether you want a website, care for an existing site, or help with follow-up."
-      : "The form on this page is switched off. It does not send anything, and there is no inbox behind it. Call or email, and include what you do, the towns you serve, and whether you want a website, care for an existing site, or help with follow-up."}
+      ? "Send a message, or email or call. Tell us what the business does and whether you are asking about a website, a CRM, automation, or more than one."
+      : "The form on this page is switched off. It does not send anything, and there is no success message behind it. Email or call, and tell us what the business does and what you want help with."}
   />
 
-  <section class="section">
+  <section class="section" aria-labelledby="contact-heading">
     <div class="wrap contact-grid">
       <div>
-        <h2>Phone and email</h2>
-        <p class="contact-line">
-          {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
-          <a class="contact-value" href={site.phoneHref}>{site.phoneDisplay}</a>
+        <h2 id="contact-heading">Phone and email</h2>
+        <ContactDetails large />
+        <p class="note">
+          These contact details are placeholders until the real ones are ready. We are not limited to one city or one
+          industry.
         </p>
-        <p class="contact-line">
-          {site.placeholders.contact && <span class="placeholder-tag">Placeholder</span>}
-          <a class="contact-value" href={`mailto:${site.email}`}>{site.email}</a>
-        </p>
-        <p>We work with local-service businesses in {site.location}.</p>
       </div>
 
       <form
         class="contact-form"
-        aria-describedby="form-status"
-        action={formLive ? site.formEndpoint : undefined}
         method={formLive ? "post" : undefined}
+        action={formLive ? site.formEndpoint : undefined}
+        aria-describedby="form-status"
       >
-        <p id="form-status" class="form-status">
-          {
-            formLive
-              ? "We use what you send only to reply to your enquiry. Please do not include passwords or payment details."
-              : "This form is turned off. It does not send messages. Use the phone number or email instead."
-          }
-        </p>
+        <div id="form-status" class="form-status">
+          <p>{formLive ? "We use what you send only to reply. Please do not include passwords or payment details." : notes.formOff}</p>
+        </div>
         <fieldset disabled={!formLive}>
           <legend>Send a message</legend>
           <div class="fields">
             <div class="fields-split">
               <div>
-                <label for="name">Your name</label>
+                <label for="name">Your name <span class="req">(required)</span></label>
                 <input id="name" name="name" type="text" autocomplete="name" required />
               </div>
               <div>
-                <label for="email">Email</label>
+                <label for="email">Email <span class="req">(required)</span></label>
                 <input id="email" name="email" type="email" autocomplete="email" required />
               </div>
             </div>
@@ -72,30 +64,29 @@ const formLive = Boolean(site.formEndpoint);
             </div>
             <div class="fields-split">
               <div>
-                <label for="area">Town or area you serve</label>
-                <input id="area" name="area" type="text" />
+                <label for="website">Current website</label>
+                <input id="website" name="website" type="url" inputmode="url" autocomplete="url" />
               </div>
               <div>
-                <label for="need">What do you need?</label>
-                <select id="need" name="need">
+                <label for="need">What do you need? <span class="req">(required)</span></label>
+                <select id="need" name="need" required>
                   <option value="">Select one</option>
-                  <option>Website launch</option>
-                  <option>Website care for an existing site</option>
-                  <option>Lead follow-up setup</option>
+                  {services.map((service) => <option>{service.title}</option>)}
                   <option>Not sure yet</option>
                 </select>
               </div>
             </div>
             <div>
-              <label for="message">Message</label>
+              <label for="message">Message <span class="req">(required)</span></label>
               <textarea id="message" name="message" required></textarea>
             </div>
-            <!-- Spam trap: people never see this field, so a filled value means a bot. -->
             <div class="hp" aria-hidden="true">
-              <label for="website-url">Leave this empty</label>
-              <input id="website-url" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+              <label for="company-website">Leave this empty</label>
+              <input id="company-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
             </div>
-            <button type="submit" disabled={!formLive}>Send message</button>
+            <button class="button" type="submit" disabled={!formLive}>
+              {formLive ? "Send message" : "Form unavailable"}
+            </button>
           </div>
         </fieldset>
       </form>

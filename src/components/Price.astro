@@ -8,7 +8,11 @@ interface Props {
 const { amount } = Astro.props;
 ---
 
-<p class="price">
-  {site.placeholders.prices && <span class="placeholder-tag">Placeholder</span>}
-  <span>Price: {amount}</span>
-</p>
+{
+  site.showPricing && (
+    <p class="price">
+      {site.placeholders.prices && <span class="placeholder-tag">Placeholder</span>}
+      <span>Price: {amount}</span>
+    </p>
+  )
+}

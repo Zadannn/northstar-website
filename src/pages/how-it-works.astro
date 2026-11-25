@@ -3,26 +3,30 @@ import Cta from "../components/Cta.astro";
 import Faq from "../components/Faq.astro";
 import PageHero from "../components/PageHero.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { steps } from "../config/site";
+import { notes, steps } from "../config/site";
 ---
 
 <BaseLayout
   title="How it works"
-  description="How a Northstar project runs: a conversation, a written plan, a preview you can review, and a launch with a clear handover."
+  description="Discovery, planning, development, testing, launch, and support. Scope is agreed before development, with no guaranteed timeline."
 >
   <PageHero
     kicker="How it works"
-    title="A short path from the first call to a site you can rely on."
-    lede="We keep the process small on purpose. You always know what is being built, what it will cost, and who is doing the work. The prices published on this draft are still placeholders."
+    title="From the first conversation to a careful handover."
+    lede="Discovery, planning, development, testing, launch, and support. Scope and deliverables are agreed before development. We do not promise a fixed timeline."
   />
 
   <section class="section" aria-labelledby="steps-heading">
     <div class="wrap">
-      <h2 id="steps-heading" class="visually-hidden">The four steps</h2>
-      <ol class="steps">
+      <div class="section-head">
+        <h2 id="steps-heading">The six steps</h2>
+        <p>{notes.scope}</p>
+      </div>
+      <ol class="process-grid">
         {
-          steps.map((step) => (
-            <li class="step">
+          steps.map((step, index) => (
+            <li>
+              <p class="step-num">{String(index + 1).padStart(2, "0")}</p>
               <h3>{step.title}</h3>
               <p>{step.detail}</p>
             </li>
@@ -32,42 +36,29 @@ import { steps } from "../config/site";
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" aria-labelledby="needs-heading">
     <div class="wrap split">
-      <article>
-        <h2>What we need from you</h2>
+      <article class="panel">
+        <h2 id="needs-heading">What we need from you</h2>
         <ul class="checklist">
-          <li>Someone who knows how the business runs and can answer questions within a few days</li>
-          <li>Your logo, photos of real jobs, and a short list of the services and towns you want shown</li>
-          <li>One combined list of changes for each round of feedback</li>
+          <li>Someone who can describe how the business runs and review the work</li>
+          <li>The services you want explained, plus any logo or photos you already have the rights to use</li>
+          <li>Access to the tools you want configured, in accounts you own</li>
+          <li>One combined set of feedback for each review round</li>
         </ul>
       </article>
-      <article>
+      <article class="panel">
         <h2>What you leave with</h2>
         <ul class="checklist">
-          <li>The website, care plan, or follow-up setup we agreed on</li>
-          <li>Ownership of your domain and accounts, with the access details</li>
-          <li>A short guide for the changes you will make yourself</li>
+          <li>The website, CRM configuration, or automation described in the scope</li>
+          <li>Domains and tool accounts in your name, with the access details</li>
+          <li>A short guide to the work that was handed over</li>
+          <li>Any support arrangement written down, if you asked for one</li>
         </ul>
       </article>
     </div>
   </section>
 
   <Faq />
-
   <Cta />
 </BaseLayout>
-
-<style>
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-</style>
